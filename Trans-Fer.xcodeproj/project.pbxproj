@@ -39,6 +39,7 @@
 		CF8CA0B027FC787D0043D225 /* OpérationTéléchargementSon.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8CA0AF27FC787D0043D225 /* OpérationTéléchargementSon.swift */; };
 		CF8CA0B227FC9E110043D225 /* EntréeCatalogueSonDuDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8CA0B127FC9E110043D225 /* EntréeCatalogueSonDuDocument.swift */; };
 		CFAD4218293CBB6200D4C6E9 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = CFAD4217293CBB6100D4C6E9 /* Credits.rtf */; };
+		CFB139A1293CC42E0025DC1F /* local.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CFB139A0293CC42E0025DC1F /* local.xcconfig */; };
 		CFDF9CE6293BBA0000FE3985 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = CFDF9CE5293BBA0000FE3985 /* Sparkle */; };
 /* End PBXBuildFile section */
 
@@ -78,6 +79,7 @@
 		CF8CA0AF27FC787D0043D225 /* OpérationTéléchargementSon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OpérationTéléchargementSon.swift"; sourceTree = "<group>"; };
 		CF8CA0B127FC9E110043D225 /* EntréeCatalogueSonDuDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EntréeCatalogueSonDuDocument.swift"; sourceTree = "<group>"; };
 		CFAD4217293CBB6100D4C6E9 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
+		CFB139A0293CC42E0025DC1F /* local.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = local.xcconfig; path = "Trans-Fer/local.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +97,7 @@
 		CF2D408827F8A52000136775 = {
 			isa = PBXGroup;
 			children = (
+				CFB139A0293CC42E0025DC1F /* local.xcconfig */,
 				CF2D409327F8A52000136775 /* Trans-Fer */,
 				CF2D409227F8A52000136775 /* Products */,
 			);
@@ -213,6 +216,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CFB139A1293CC42E0025DC1F /* local.xcconfig in Resources */,
 				CF260102280D7511004FCDB1 /* DocumentTransfertRP2040.xib in Resources */,
 				CF2D409727F8A52200136775 /* Assets.xcassets in Resources */,
 				CF2D40AE27F8A5E200136775 /* TransfertPIC.icns in Resources */,
@@ -306,12 +310,12 @@
 /* Begin XCBuildConfiguration section */
 		CF2D409C27F8A52200136775 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CFB139A0293CC42E0025DC1F /* local.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -357,8 +361,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.6;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -368,12 +370,12 @@
 		};
 		CF2D409D27F8A52200136775 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CFB139A0293CC42E0025DC1F /* local.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -413,8 +415,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.6;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -431,7 +431,6 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 9.9.9;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = YW8QY74J2A;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -463,7 +462,6 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 9.9.9;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = YW8QY74J2A;
 				ENABLE_HARDENED_RUNTIME = YES;

@@ -153,38 +153,44 @@ fm.changeCurrentDirectoryPath (DISTRIBUTION_DIR + "/" + TRANS_FER_DIR)
 let ANNEE = Calendar.current.component (.year, from: Date ())
 print ("ANNÉE : \(ANNEE)")
 do{
+//--- Date de construction
+  let dateConstruction = Date ()
+  let dateFormatter = DateFormatter()
+  dateFormatter.locale = Locale(identifier: "en_US")
+  dateFormatter.setLocalizedDateFormatFromTemplate("MMMMdYYYY") // set template after setting locale
 //-------------------- Obtenir le SHA du dernier commit
   var sha = runHiddenCommand ("/usr/local/bin/git", ["rev-parse", "--short", "HEAD"])
   _ = sha.removeLast () // Remove trailing LF
 //  let sha = runHiddenCommand ("/usr/local/bin/git", ["log", "-n1", "--format=format:\"%H\""])
 //  Swift.print ("sha \(sha)")
 //-------------------- Écrire le SHA
-  let fileRelativePath = "Trans-Fer/Trans-Fer/Credits.rtf"
+  let fileRelativePath = "Trans-Fer/Credits.rtf"
   let str : String = try! String (contentsOf: URL (fileURLWithPath: fileRelativePath), encoding: .utf8)
   let components = str.components (separatedBy: "$SHA_GITHUB$")
   let str2 = components.joined (separator: sha)
-  try! str2.write (to: URL (fileURLWithPath: fileRelativePath), atomically: true, encoding: .utf8)
+  let components2 = str2.components (separatedBy: "$LA_DATE$")
+  let str3 = components.joined (separator: dateFormatter.string (from: dateConstruction))
+  try! str3.write (to: URL (fileURLWithPath: fileRelativePath), atomically: true, encoding: .utf8)
+//-------------------- Fixer le numéro de version
+  let chaîneVersion = "CURRENT_PROJECT_VERSION = \(VERSION_TRANS_FER)\n"
+  let local_xcconfig_FileFullPath = DISTRIBUTION_DIR + "/" + TRANS_FER_DIR + "/Trans-Fer/local.xcconfig"
+  try chaîneVersion.write (to: URL (fileURLWithPath: local_xcconfig_FileFullPath), options: .atomic)
 //-------------------- Obtenir le numéro de build
 //  let plistFileFullPath = DISTRIBUTION_DIR + "/" + TRANS_FER_DIR + "/Trans-Fer/Trans-Fer/Info-" + BUILD_KIND.string + ".plist"
-  let plistFileFullPath = DISTRIBUTION_DIR + "/" + TRANS_FER_DIR + "/Trans-Fer/Trans-Fer/Info.plist"
-  let data : Data = try Data (contentsOf: URL (fileURLWithPath: plistFileFullPath))
-  var plistDictionary : [String : Any]
-  if let d = try PropertyListSerialization.propertyList (from: data, format: nil) as? [String : Any] {
-    plistDictionary = d
-  }else{
-    print (RED + "line \(#line) : object is not a dictionary" + ENDC)
-    exit (1)
-  }
-//--- Date de construction
-  let dateConstruction = Date ()
-  let dateFormatter = DateFormatter()
-  dateFormatter.locale = Locale(identifier: "en_US")
-  dateFormatter.setLocalizedDateFormatFromTemplate("MMMMdYYYY") // set template after setting locale
-//--- Mettre à jour les numéros de version dans la plist
-  plistDictionary ["CFBundleVersion"] = VERSION_TRANS_FER + ", " + dateFormatter.string (from: dateConstruction)// + ", build " + buildString
-  plistDictionary ["CFBundleShortVersionString"] = VERSION_TRANS_FER
-  let plistNewData = try PropertyListSerialization.data (fromPropertyList: plistDictionary, format: .binary, options: 0)
-  try plistNewData.write (to: URL (fileURLWithPath: plistFileFullPath), options: .atomic)
+//  let plistFileFullPath = DISTRIBUTION_DIR + "/" + TRANS_FER_DIR + "/Trans-Fer/Info.plist"
+//  let data : Data = try Data (contentsOf: URL (fileURLWithPath: plistFileFullPath))
+//  var plistDictionary : [String : Any]
+//  if let d = try PropertyListSerialization.propertyList (from: data, format: nil) as? [String : Any] {
+//    plistDictionary = d
+//  }else{
+//    print (RED + "line \(#line) : object is not a dictionary" + ENDC)
+//    exit (1)
+//  }
+////--- Mettre à jour les numéros de version dans la plist
+//  plistDictionary ["CFBundleVersion"] = VERSION_TRANS_FER + ", " + dateFormatter.string (from: dateConstruction)
+//  plistDictionary ["CFBundleShortVersionString"] = VERSION_TRANS_FER
+//  let plistNewData = try PropertyListSerialization.data (fromPropertyList: plistDictionary, format: .binary, options: 0)
+//  try plistNewData.write (to: URL (fileURLWithPath: plistFileFullPath), options: .atomic)
 //-------------------- Compiler le projet Xcode
   let debutCompilation = Date ()
   runCommand ("/bin/rm", ["-fr", "build"])
@@ -202,10 +208,12 @@ do{
     PRODUCT_NAME = "Trans-Fer"
   }
 //-------------------- Copier l'application dans la racine du répertoire de distribution
-  runCommand ("/bin/cp", ["-r", "build/" + BUILD_KIND.string + "/" + PRODUCT_NAME + ".app", DISTRIBUTION_DIR])
+//  runCommand ("/bin/cp", ["-r", "build/" + BUILD_KIND.string + "/" + PRODUCT_NAME + ".app", DISTRIBUTION_DIR])
+  runCommand ("/bin/cp", ["-r", "build/Debug/" + PRODUCT_NAME + ".app", DISTRIBUTION_DIR])
 //-------------------- Construction package
   let packageFile = PRODUCT_NAME + "-" + VERSION_TRANS_FER + ".pkg"
-  runCommand ("/usr/bin/productbuild", ["--component-compression", "auto", "--component", "build/" + BUILD_KIND.string + "/" + PRODUCT_NAME + ".app", "/Applications", packageFile])
+//  runCommand ("/usr/bin/productbuild", ["--component-compression", "auto", "--component", "build/" + BUILD_KIND.string + "/" + PRODUCT_NAME + ".app", "/Applications", packageFile])
+  runCommand ("/usr/bin/productbuild", ["--component-compression", "auto", "--component", "build/Debug/" + PRODUCT_NAME + ".app", "/Applications", packageFile])
   runCommand ("/bin/cp", [packageFile, DISTRIBUTION_DIR])
 //-------------------- Créer l'archive de Cocoa canari
   let nomArchive = PRODUCT_NAME + "-" + VERSION_TRANS_FER
@@ -262,7 +270,8 @@ do{
     "-dv",
 //    "--digest-algorithm=sha1,sha256",
     "--verbose=4",
-    DISTRIBUTION_DIR + "/" + TRANS_FER_DIR + "/build/" + BUILD_KIND.string + "/" + PRODUCT_NAME + ".app"
+//    DISTRIBUTION_DIR + "/" + TRANS_FER_DIR + "/build/" + BUILD_KIND.string + "/" + PRODUCT_NAME + ".app"
+    DISTRIBUTION_DIR + "/" + TRANS_FER_DIR + "/build/Debug/" + PRODUCT_NAME + ".app"
   ]
   runCommand ("/usr/bin/codesign", argumentsSignatureCode)
 //--- Supprimer les répertoires intermédiaires
