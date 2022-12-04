@@ -31,6 +31,7 @@ let BUILD_KIND = ProductKind.release
 let VERSION_TRANS_FER = "1.0.0"
 let MAC_OS_MINIMUM_VERSION = "10.15"
 let NOTES : [String] = [
+  "Première version"
 ]
 let BUGFIXES : [String] = [
 ]
