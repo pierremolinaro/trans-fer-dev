@@ -226,7 +226,7 @@ do{
 //-------------------- Supprimer le fichier .pkg
   runCommand ("/bin/rm", [DISTRIBUTION_DIR + "/" + packageFile])
 //-------------------- Calculer la clé de la somme de contrôle de l'archive DMG pour Sparkle
-  let signature = runHiddenCommand ("./distribution-el-canari/sign_update", ["../" + nomArchive + ".dmg"])
+  let signature = runHiddenCommand ("./distribution-trans-fer/sign_update", ["../" + nomArchive + ".dmg"])
   // print ("cleArchive '\(signature)'")
   var edSignature = ""
   var dmgLength = ""
