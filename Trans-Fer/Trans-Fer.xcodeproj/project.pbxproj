@@ -38,6 +38,7 @@
 		CF76469827FC6762001F3D1A /* EntréeCatalogueSonDuPic.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF76469727FC6762001F3D1A /* EntréeCatalogueSonDuPic.swift */; };
 		CF8CA0B027FC787D0043D225 /* OpérationTéléchargementSon.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8CA0AF27FC787D0043D225 /* OpérationTéléchargementSon.swift */; };
 		CF8CA0B227FC9E110043D225 /* EntréeCatalogueSonDuDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8CA0B127FC9E110043D225 /* EntréeCatalogueSonDuDocument.swift */; };
+		CFAD4218293CBB6200D4C6E9 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = CFAD4217293CBB6100D4C6E9 /* Credits.rtf */; };
 		CFDF9CE6293BBA0000FE3985 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = CFDF9CE5293BBA0000FE3985 /* Sparkle */; };
 /* End PBXBuildFile section */
 
@@ -76,6 +77,7 @@
 		CF76469727FC6762001F3D1A /* EntréeCatalogueSonDuPic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EntréeCatalogueSonDuPic.swift"; sourceTree = "<group>"; };
 		CF8CA0AF27FC787D0043D225 /* OpérationTéléchargementSon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OpérationTéléchargementSon.swift"; sourceTree = "<group>"; };
 		CF8CA0B127FC9E110043D225 /* EntréeCatalogueSonDuDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EntréeCatalogueSonDuDocument.swift"; sourceTree = "<group>"; };
+		CFAD4217293CBB6100D4C6E9 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 		CF2D409327F8A52000136775 /* Trans-Fer */ = {
 			isa = PBXGroup;
 			children = (
+				CFAD4217293CBB6100D4C6E9 /* Credits.rtf */,
 				CF2D40AC27F8A5E200136775 /* AppDelegate-conversion-son.swift */,
 				CF2D40A527F8A5E200136775 /* AppDelegate-logWindow.swift */,
 				CF2D40A727F8A5E200136775 /* AppDelegate-nouveau-son.swift */,
@@ -218,6 +221,7 @@
 				CF2600FF280D7503004FCDB1 /* TransfertRP2040.icns in Resources */,
 				CF2D40DA27F8A81000136775 /* DocumentJouerSon10bits.xib in Resources */,
 				CF2D40AF27F8A5E200136775 /* carteSon.icns in Resources */,
+				CFAD4218293CBB6200D4C6E9 /* Credits.rtf in Resources */,
 				CF2D40DC27F8A81000136775 /* DocumentTransfertPIC.xib in Resources */,
 				CF2D40DB27F8A81000136775 /* DocumentCarteSon.xib in Resources */,
 			);
