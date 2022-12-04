@@ -77,6 +77,8 @@
 			<string>DocumentTransfertRP2040</string>
 		</dict>
 	</array>
+	<key>LSMinimumSystemVersion</key>
+	<string>10.15</string>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>
