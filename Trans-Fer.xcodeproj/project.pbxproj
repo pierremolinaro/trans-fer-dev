@@ -114,7 +114,6 @@
 		CF2D409327F8A52000136775 /* Trans-Fer */ = {
 			isa = PBXGroup;
 			children = (
-				CFAD4217293CBB6100D4C6E9 /* Credits.rtf */,
 				CF2D40AC27F8A5E200136775 /* AppDelegate-conversion-son.swift */,
 				CF2D40A527F8A5E200136775 /* AppDelegate-logWindow.swift */,
 				CF2D40A727F8A5E200136775 /* AppDelegate-nouveau-son.swift */,
@@ -126,6 +125,7 @@
 				CF2D409627F8A52200136775 /* Assets.xcassets */,
 				CF2D40A327F8A5E200136775 /* carteSon.icns */,
 				CF37845B27FC51870059EF42 /* crc.swift */,
+				CFAD4217293CBB6100D4C6E9 /* Credits.rtf */,
 				CF260108280D9D75004FCDB1 /* Data-utilities.swift */,
 				CF2D40A827F8A5E200136775 /* DocumentCarteSon.swift */,
 				CF2D40D627F8A81000136775 /* DocumentCarteSon.xib */,

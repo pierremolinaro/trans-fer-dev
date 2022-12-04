@@ -159,7 +159,8 @@ do{
   dateFormatter.locale = Locale(identifier: "en_US")
   dateFormatter.setLocalizedDateFormatFromTemplate("MMMMdYYYY") // set template after setting locale
 //-------------------- Obtenir le SHA du dernier commit
-  var sha = runHiddenCommand ("/usr/local/bin/git", ["rev-parse", "--short", "HEAD"])
+//  var sha = runHiddenCommand ("/usr/local/bin/git", ["rev-parse", "--short", "HEAD"])
+  var sha = runHiddenCommand ("/usr/local/bin/git", ["rev-parse", "HEAD"])
   _ = sha.removeLast () // Remove trailing LF
 //  let sha = runHiddenCommand ("/usr/local/bin/git", ["log", "-n1", "--format=format:\"%H\""])
 //  Swift.print ("sha \(sha)")
@@ -169,12 +170,13 @@ do{
   let components = str.components (separatedBy: "$SHA_GITHUB$")
   let str2 = components.joined (separator: sha)
   let components2 = str2.components (separatedBy: "$LA_DATE$")
-  let str3 = components.joined (separator: dateFormatter.string (from: dateConstruction))
+  let str3 = components2.joined (separator: dateFormatter.string (from: dateConstruction))
   try! str3.write (to: URL (fileURLWithPath: fileRelativePath), atomically: true, encoding: .utf8)
 //-------------------- Fixer le numéro de version
   let chaîneVersion = "CURRENT_PROJECT_VERSION = \(VERSION_TRANS_FER)\n"
+  let dataChaîneVersion = chaîneVersion.data (using: .utf8)!
   let local_xcconfig_FileFullPath = DISTRIBUTION_DIR + "/" + TRANS_FER_DIR + "/Trans-Fer/local.xcconfig"
-  try chaîneVersion.write (to: URL (fileURLWithPath: local_xcconfig_FileFullPath), options: .atomic)
+  try dataChaîneVersion.write (to: URL (fileURLWithPath: local_xcconfig_FileFullPath), options: .atomic)
 //-------------------- Obtenir le numéro de build
 //  let plistFileFullPath = DISTRIBUTION_DIR + "/" + TRANS_FER_DIR + "/Trans-Fer/Trans-Fer/Info-" + BUILD_KIND.string + ".plist"
 //  let plistFileFullPath = DISTRIBUTION_DIR + "/" + TRANS_FER_DIR + "/Trans-Fer/Info.plist"
