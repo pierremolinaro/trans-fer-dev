@@ -8,37 +8,36 @@ import Foundation
 // Product Kind
 //--------------------------------------------------------------------------------------------------
 
-enum ProductKind {
-  case release
-  case debug
-
-  var string : String {
-    switch self {
-      case .release : return "Release"
-      case .debug   : return "Debug"
-    }
-  }
-}
+//enum ProductKind {
+//  case release
+//  case debug
+//
+//  var string : String {
+//    switch self {
+//      case .release : return "Release"
+//      case .debug   : return "Debug"
+//    }
+//  }
+//}
 
 //--------------------------------------------------------------------------------------------------
 
-let BUILD_KIND = ProductKind.release
+//let BUILD_KIND = ProductKind.release
 
 //--------------------------------------------------------------------------------------------------
 // Version Trans-Fer
 //--------------------------------------------------------------------------------------------------
 
-let VERSION_TRANS_FER = "1.0.1"
+let VERSION_TRANS_FER = "1.0.2"
 let MAC_OS_MINIMUM_VERSION = "10.15"
 let NOTES : [String] = [
-  "Une mise à jour, pour vérifier que le mécanisme de mise à jour fonctionne correctement"
 ]
 let BUGFIXES : [String] = [
+  "Correction des liens dans « À propos de Trans-Fer »"
 ]
 let CHANGES : [String] = [
 ]
 let NEWS : [String] = [
-//  "Duplication des inspecteurs dans la saisie du schéma d'un projet"
 ]
 
 //--------------------------------------------------------------------------------------------------
@@ -203,13 +202,13 @@ do{
     ["-target", "Trans-Fer", "-configuration", "Debug"]
   )
   let DureeCompilation = Date ().timeIntervalSince (debutCompilation)
-  let PRODUCT_NAME : String
-  switch BUILD_KIND {
-  case .debug :
-    PRODUCT_NAME = "Trans-Fer-Debug"
-  case .release:
-    PRODUCT_NAME = "Trans-Fer"
-  }
+  let PRODUCT_NAME : String = "Trans-Fer"
+//  switch BUILD_KIND {
+//  case .debug :
+//    PRODUCT_NAME = "Trans-Fer-Debug"
+//  case .release:
+//    PRODUCT_NAME = "Trans-Fer"
+//  }
 //-------------------- Copier l'application dans la racine du répertoire de distribution
 //  runCommand ("/bin/cp", ["-r", "build/" + BUILD_KIND.string + "/" + PRODUCT_NAME + ".app", DISTRIBUTION_DIR])
   runCommand ("/bin/cp", ["-r", "build/Debug/" + PRODUCT_NAME + ".app", DISTRIBUTION_DIR])
