@@ -1,4 +1,4 @@
 
-Trans-Fer/build/*
-Trans-Fer/Trans-Fer.xcodeproj/project.xcworkspace/*
-Trans-Fer/Trans-Fer.xcodeproj/xcuserdata/*
+build/*
+Trans-Fer.xcodeproj/project.xcworkspace/*
+Trans-Fer.xcodeproj/xcuserdata/*

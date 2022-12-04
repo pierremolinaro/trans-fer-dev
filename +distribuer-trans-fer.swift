@@ -159,13 +159,14 @@ do{
 //  let sha = runHiddenCommand ("/usr/local/bin/git", ["log", "-n1", "--format=format:\"%H\""])
 //  Swift.print ("sha \(sha)")
 //-------------------- Écrire le SHA
-  let fileRelativePath = "Trans-Fer/resources/Credits.rtf"
+  let fileRelativePath = "Trans-Fer/Trans-Fer/Credits.rtf"
   let str : String = try! String (contentsOf: URL (fileURLWithPath: fileRelativePath), encoding: .utf8)
   let components = str.components (separatedBy: "$SHA_GITHUB$")
   let str2 = components.joined (separator: sha)
   try! str2.write (to: URL (fileURLWithPath: fileRelativePath), atomically: true, encoding: .utf8)
 //-------------------- Obtenir le numéro de build
-  let plistFileFullPath = DISTRIBUTION_DIR + "/" + TRANS_FER_DIR + "/Trans-Fer/Trans-Fer/Info-" + BUILD_KIND.string + ".plist"
+//  let plistFileFullPath = DISTRIBUTION_DIR + "/" + TRANS_FER_DIR + "/Trans-Fer/Trans-Fer/Info-" + BUILD_KIND.string + ".plist"
+  let plistFileFullPath = DISTRIBUTION_DIR + "/" + TRANS_FER_DIR + "/Trans-Fer/Trans-Fer/Info.plist"
   let data : Data = try Data (contentsOf: URL (fileURLWithPath: plistFileFullPath))
   var plistDictionary : [String : Any]
   if let d = try PropertyListSerialization.propertyList (from: data, format: nil) as? [String : Any] {
@@ -187,10 +188,11 @@ do{
 //-------------------- Compiler le projet Xcode
   let debutCompilation = Date ()
   runCommand ("/bin/rm", ["-fr", "build"])
-  runCommand ("/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
-              ["-target", "Trans-Fer-" + BUILD_KIND.string,
-               "-configuration", BUILD_KIND.string
-              ])
+  runCommand (
+    "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+//    ["-target", "Trans-Fer-" + BUILD_KIND.string, "-configuration", BUILD_KIND.string]
+    ["-target", "Trans-Fer", "-configuration", "Debug"]
+  )
   let DureeCompilation = Date ().timeIntervalSince (debutCompilation)
   let PRODUCT_NAME : String
   switch BUILD_KIND {
