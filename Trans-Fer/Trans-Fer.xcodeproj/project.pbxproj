@@ -1,0 +1,527 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CF2600FE280D7503004FCDB1 /* DocumentTransfertRP2040.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2600FC280D7502004FCDB1 /* DocumentTransfertRP2040.swift */; };
+		CF2600FF280D7503004FCDB1 /* TransfertRP2040.icns in Resources */ = {isa = PBXBuildFile; fileRef = CF2600FD280D7502004FCDB1 /* TransfertRP2040.icns */; };
+		CF260102280D7511004FCDB1 /* DocumentTransfertRP2040.xib in Resources */ = {isa = PBXBuildFile; fileRef = CF260100280D7511004FCDB1 /* DocumentTransfertRP2040.xib */; };
+		CF260104280D76E6004FCDB1 /* AppDelegate-nouveau-transfert-rp2040.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF260103280D76E6004FCDB1 /* AppDelegate-nouveau-transfert-rp2040.swift */; };
+		CF260106280D9CDF004FCDB1 /* ASCII-codes.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF260105280D9CDF004FCDB1 /* ASCII-codes.swift */; };
+		CF260109280D9D75004FCDB1 /* Data-utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF260108280D9D75004FCDB1 /* Data-utilities.swift */; };
+		CF26010C280D9DE3004FCDB1 /* DocumentTransfertPIC-construire-binpic.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF26010B280D9DE3004FCDB1 /* DocumentTransfertPIC-construire-binpic.swift */; };
+		CF26010E280DA5F6004FCDB1 /* DocumentTransfertPIC-transformer-en-piccolo-data.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF26010D280DA5F6004FCDB1 /* DocumentTransfertPIC-transformer-en-piccolo-data.swift */; };
+		CF260110280DA869004FCDB1 /* DocumentTransfertRP2040-construire-binpic.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF26010F280DA869004FCDB1 /* DocumentTransfertRP2040-construire-binpic.swift */; };
+		CF2D409527F8A52000136775 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2D409427F8A52000136775 /* AppDelegate.swift */; };
+		CF2D409727F8A52200136775 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF2D409627F8A52200136775 /* Assets.xcassets */; };
+		CF2D409A27F8A52200136775 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = CF2D409827F8A52200136775 /* MainMenu.xib */; };
+		CF2D40AD27F8A5E200136775 /* AppDelegate-nouveau-transfert-pic.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2D40A127F8A5E200136775 /* AppDelegate-nouveau-transfert-pic.swift */; };
+		CF2D40AE27F8A5E200136775 /* TransfertPIC.icns in Resources */ = {isa = PBXBuildFile; fileRef = CF2D40A227F8A5E200136775 /* TransfertPIC.icns */; };
+		CF2D40AF27F8A5E200136775 /* carteSon.icns in Resources */ = {isa = PBXBuildFile; fileRef = CF2D40A327F8A5E200136775 /* carteSon.icns */; };
+		CF2D40B027F8A5E200136775 /* son10bits.icns in Resources */ = {isa = PBXBuildFile; fileRef = CF2D40A427F8A5E200136775 /* son10bits.icns */; };
+		CF2D40B127F8A5E200136775 /* AppDelegate-logWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2D40A527F8A5E200136775 /* AppDelegate-logWindow.swift */; };
+		CF2D40B227F8A5E200136775 /* OpérationLectureCatalogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2D40A627F8A5E200136775 /* OpérationLectureCatalogue.swift */; };
+		CF2D40B327F8A5E200136775 /* AppDelegate-nouveau-son.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2D40A727F8A5E200136775 /* AppDelegate-nouveau-son.swift */; };
+		CF2D40B427F8A5E200136775 /* DocumentCarteSon.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2D40A827F8A5E200136775 /* DocumentCarteSon.swift */; };
+		CF2D40B527F8A5E200136775 /* AppDelegate-nouvelle-carte-son.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2D40A927F8A5E200136775 /* AppDelegate-nouvelle-carte-son.swift */; };
+		CF2D40B627F8A5E200136775 /* DocumentTransfertPIC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2D40AA27F8A5E200136775 /* DocumentTransfertPIC.swift */; };
+		CF2D40B727F8A5E200136775 /* DocumentJouerSon10bits.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2D40AB27F8A5E200136775 /* DocumentJouerSon10bits.swift */; };
+		CF2D40B827F8A5E200136775 /* AppDelegate-conversion-son.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2D40AC27F8A5E200136775 /* AppDelegate-conversion-son.swift */; };
+		CF2D40DA27F8A81000136775 /* DocumentJouerSon10bits.xib in Resources */ = {isa = PBXBuildFile; fileRef = CF2D40D427F8A81000136775 /* DocumentJouerSon10bits.xib */; };
+		CF2D40DB27F8A81000136775 /* DocumentCarteSon.xib in Resources */ = {isa = PBXBuildFile; fileRef = CF2D40D627F8A81000136775 /* DocumentCarteSon.xib */; };
+		CF2D40DC27F8A81000136775 /* DocumentTransfertPIC.xib in Resources */ = {isa = PBXBuildFile; fileRef = CF2D40D827F8A81000136775 /* DocumentTransfertPIC.xib */; };
+		CF37845C27FC51870059EF42 /* crc.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF37845B27FC51870059EF42 /* crc.swift */; };
+		CF76469827FC6762001F3D1A /* EntréeCatalogueSonDuPic.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF76469727FC6762001F3D1A /* EntréeCatalogueSonDuPic.swift */; };
+		CF8CA0B027FC787D0043D225 /* OpérationTéléchargementSon.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8CA0AF27FC787D0043D225 /* OpérationTéléchargementSon.swift */; };
+		CF8CA0B227FC9E110043D225 /* EntréeCatalogueSonDuDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8CA0B127FC9E110043D225 /* EntréeCatalogueSonDuDocument.swift */; };
+		CFDF9CE6293BBA0000FE3985 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = CFDF9CE5293BBA0000FE3985 /* Sparkle */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		CF2600FC280D7502004FCDB1 /* DocumentTransfertRP2040.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentTransfertRP2040.swift; sourceTree = "<group>"; };
+		CF2600FD280D7502004FCDB1 /* TransfertRP2040.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = TransfertRP2040.icns; sourceTree = "<group>"; };
+		CF260101280D7511004FCDB1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DocumentTransfertRP2040.xib; sourceTree = "<group>"; };
+		CF260103280D76E6004FCDB1 /* AppDelegate-nouveau-transfert-rp2040.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate-nouveau-transfert-rp2040.swift"; sourceTree = "<group>"; };
+		CF260105280D9CDF004FCDB1 /* ASCII-codes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCII-codes.swift"; sourceTree = "<group>"; };
+		CF260108280D9D75004FCDB1 /* Data-utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data-utilities.swift"; sourceTree = "<group>"; };
+		CF26010B280D9DE3004FCDB1 /* DocumentTransfertPIC-construire-binpic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DocumentTransfertPIC-construire-binpic.swift"; sourceTree = "<group>"; };
+		CF26010D280DA5F6004FCDB1 /* DocumentTransfertPIC-transformer-en-piccolo-data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DocumentTransfertPIC-transformer-en-piccolo-data.swift"; sourceTree = "<group>"; };
+		CF26010F280DA869004FCDB1 /* DocumentTransfertRP2040-construire-binpic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DocumentTransfertRP2040-construire-binpic.swift"; sourceTree = "<group>"; };
+		CF2D409127F8A52000136775 /* Trans-Fer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Trans-Fer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF2D409427F8A52000136775 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		CF2D409627F8A52200136775 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CF2D409927F8A52200136775 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		CF2D409B27F8A52200136775 /* Trans_Fer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Trans_Fer.entitlements; sourceTree = "<group>"; };
+		CF2D40A127F8A5E200136775 /* AppDelegate-nouveau-transfert-pic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate-nouveau-transfert-pic.swift"; sourceTree = "<group>"; };
+		CF2D40A227F8A5E200136775 /* TransfertPIC.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = TransfertPIC.icns; sourceTree = "<group>"; };
+		CF2D40A327F8A5E200136775 /* carteSon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = carteSon.icns; sourceTree = "<group>"; };
+		CF2D40A427F8A5E200136775 /* son10bits.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = son10bits.icns; sourceTree = "<group>"; };
+		CF2D40A527F8A5E200136775 /* AppDelegate-logWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate-logWindow.swift"; sourceTree = "<group>"; };
+		CF2D40A627F8A5E200136775 /* OpérationLectureCatalogue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OpérationLectureCatalogue.swift"; sourceTree = "<group>"; };
+		CF2D40A727F8A5E200136775 /* AppDelegate-nouveau-son.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate-nouveau-son.swift"; sourceTree = "<group>"; };
+		CF2D40A827F8A5E200136775 /* DocumentCarteSon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentCarteSon.swift; sourceTree = "<group>"; };
+		CF2D40A927F8A5E200136775 /* AppDelegate-nouvelle-carte-son.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate-nouvelle-carte-son.swift"; sourceTree = "<group>"; };
+		CF2D40AA27F8A5E200136775 /* DocumentTransfertPIC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentTransfertPIC.swift; sourceTree = "<group>"; };
+		CF2D40AB27F8A5E200136775 /* DocumentJouerSon10bits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentJouerSon10bits.swift; sourceTree = "<group>"; };
+		CF2D40AC27F8A5E200136775 /* AppDelegate-conversion-son.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate-conversion-son.swift"; sourceTree = "<group>"; };
+		CF2D40D327F8A69A00136775 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		CF2D40D527F8A81000136775 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DocumentJouerSon10bits.xib; sourceTree = "<group>"; };
+		CF2D40D727F8A81000136775 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DocumentCarteSon.xib; sourceTree = "<group>"; };
+		CF2D40D927F8A81000136775 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DocumentTransfertPIC.xib; sourceTree = "<group>"; };
+		CF37845B27FC51870059EF42 /* crc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = crc.swift; sourceTree = "<group>"; };
+		CF76469727FC6762001F3D1A /* EntréeCatalogueSonDuPic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EntréeCatalogueSonDuPic.swift"; sourceTree = "<group>"; };
+		CF8CA0AF27FC787D0043D225 /* OpérationTéléchargementSon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OpérationTéléchargementSon.swift"; sourceTree = "<group>"; };
+		CF8CA0B127FC9E110043D225 /* EntréeCatalogueSonDuDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EntréeCatalogueSonDuDocument.swift"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CF2D408E27F8A52000136775 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CFDF9CE6293BBA0000FE3985 /* Sparkle in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CF2D408827F8A52000136775 = {
+			isa = PBXGroup;
+			children = (
+				CF2D409327F8A52000136775 /* Trans-Fer */,
+				CF2D409227F8A52000136775 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CF2D409227F8A52000136775 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CF2D409127F8A52000136775 /* Trans-Fer.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CF2D409327F8A52000136775 /* Trans-Fer */ = {
+			isa = PBXGroup;
+			children = (
+				CF2D40AC27F8A5E200136775 /* AppDelegate-conversion-son.swift */,
+				CF2D40A527F8A5E200136775 /* AppDelegate-logWindow.swift */,
+				CF2D40A727F8A5E200136775 /* AppDelegate-nouveau-son.swift */,
+				CF2D40A127F8A5E200136775 /* AppDelegate-nouveau-transfert-pic.swift */,
+				CF260103280D76E6004FCDB1 /* AppDelegate-nouveau-transfert-rp2040.swift */,
+				CF2D40A927F8A5E200136775 /* AppDelegate-nouvelle-carte-son.swift */,
+				CF2D409427F8A52000136775 /* AppDelegate.swift */,
+				CF260105280D9CDF004FCDB1 /* ASCII-codes.swift */,
+				CF2D409627F8A52200136775 /* Assets.xcassets */,
+				CF2D40A327F8A5E200136775 /* carteSon.icns */,
+				CF37845B27FC51870059EF42 /* crc.swift */,
+				CF260108280D9D75004FCDB1 /* Data-utilities.swift */,
+				CF2D40A827F8A5E200136775 /* DocumentCarteSon.swift */,
+				CF2D40D627F8A81000136775 /* DocumentCarteSon.xib */,
+				CF2D40AB27F8A5E200136775 /* DocumentJouerSon10bits.swift */,
+				CF2D40D427F8A81000136775 /* DocumentJouerSon10bits.xib */,
+				CF26010B280D9DE3004FCDB1 /* DocumentTransfertPIC-construire-binpic.swift */,
+				CF26010D280DA5F6004FCDB1 /* DocumentTransfertPIC-transformer-en-piccolo-data.swift */,
+				CF2D40AA27F8A5E200136775 /* DocumentTransfertPIC.swift */,
+				CF2D40D827F8A81000136775 /* DocumentTransfertPIC.xib */,
+				CF26010F280DA869004FCDB1 /* DocumentTransfertRP2040-construire-binpic.swift */,
+				CF2600FC280D7502004FCDB1 /* DocumentTransfertRP2040.swift */,
+				CF260100280D7511004FCDB1 /* DocumentTransfertRP2040.xib */,
+				CF8CA0B127FC9E110043D225 /* EntréeCatalogueSonDuDocument.swift */,
+				CF76469727FC6762001F3D1A /* EntréeCatalogueSonDuPic.swift */,
+				CF2D40D327F8A69A00136775 /* Info.plist */,
+				CF2D409827F8A52200136775 /* MainMenu.xib */,
+				CF2D40A627F8A5E200136775 /* OpérationLectureCatalogue.swift */,
+				CF8CA0AF27FC787D0043D225 /* OpérationTéléchargementSon.swift */,
+				CF2D40A427F8A5E200136775 /* son10bits.icns */,
+				CF2D409B27F8A52200136775 /* Trans_Fer.entitlements */,
+				CF2D40A227F8A5E200136775 /* TransfertPIC.icns */,
+				CF2600FD280D7502004FCDB1 /* TransfertRP2040.icns */,
+			);
+			path = "Trans-Fer";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CF2D409027F8A52000136775 /* Trans-Fer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CF2D409E27F8A52200136775 /* Build configuration list for PBXNativeTarget "Trans-Fer" */;
+			buildPhases = (
+				CF2D408D27F8A52000136775 /* Sources */,
+				CF2D408E27F8A52000136775 /* Frameworks */,
+				CF2D408F27F8A52000136775 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Trans-Fer";
+			packageProductDependencies = (
+				CFDF9CE5293BBA0000FE3985 /* Sparkle */,
+			);
+			productName = "Trans-Fer";
+			productReference = CF2D409127F8A52000136775 /* Trans-Fer.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CF2D408927F8A52000136775 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1310;
+				LastUpgradeCheck = 1410;
+				TargetAttributes = {
+					CF2D409027F8A52000136775 = {
+						CreatedOnToolsVersion = 13.1;
+					};
+				};
+			};
+			buildConfigurationList = CF2D408C27F8A52000136775 /* Build configuration list for PBXProject "Trans-Fer" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CF2D408827F8A52000136775;
+			packageReferences = (
+				CFDF9CE4293BBA0000FE3985 /* XCRemoteSwiftPackageReference "Sparkle" */,
+			);
+			productRefGroup = CF2D409227F8A52000136775 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CF2D409027F8A52000136775 /* Trans-Fer */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CF2D408F27F8A52000136775 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CF260102280D7511004FCDB1 /* DocumentTransfertRP2040.xib in Resources */,
+				CF2D409727F8A52200136775 /* Assets.xcassets in Resources */,
+				CF2D40AE27F8A5E200136775 /* TransfertPIC.icns in Resources */,
+				CF2D40B027F8A5E200136775 /* son10bits.icns in Resources */,
+				CF2D409A27F8A52200136775 /* MainMenu.xib in Resources */,
+				CF2600FF280D7503004FCDB1 /* TransfertRP2040.icns in Resources */,
+				CF2D40DA27F8A81000136775 /* DocumentJouerSon10bits.xib in Resources */,
+				CF2D40AF27F8A5E200136775 /* carteSon.icns in Resources */,
+				CF2D40DC27F8A81000136775 /* DocumentTransfertPIC.xib in Resources */,
+				CF2D40DB27F8A81000136775 /* DocumentCarteSon.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CF2D408D27F8A52000136775 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CF2D40B227F8A5E200136775 /* OpérationLectureCatalogue.swift in Sources */,
+				CF2D40B527F8A5E200136775 /* AppDelegate-nouvelle-carte-son.swift in Sources */,
+				CF26010E280DA5F6004FCDB1 /* DocumentTransfertPIC-transformer-en-piccolo-data.swift in Sources */,
+				CF26010C280D9DE3004FCDB1 /* DocumentTransfertPIC-construire-binpic.swift in Sources */,
+				CF2D40B827F8A5E200136775 /* AppDelegate-conversion-son.swift in Sources */,
+				CF260106280D9CDF004FCDB1 /* ASCII-codes.swift in Sources */,
+				CF76469827FC6762001F3D1A /* EntréeCatalogueSonDuPic.swift in Sources */,
+				CF2D40B627F8A5E200136775 /* DocumentTransfertPIC.swift in Sources */,
+				CF37845C27FC51870059EF42 /* crc.swift in Sources */,
+				CF2D40B127F8A5E200136775 /* AppDelegate-logWindow.swift in Sources */,
+				CF260110280DA869004FCDB1 /* DocumentTransfertRP2040-construire-binpic.swift in Sources */,
+				CF2D40B327F8A5E200136775 /* AppDelegate-nouveau-son.swift in Sources */,
+				CF2D40B427F8A5E200136775 /* DocumentCarteSon.swift in Sources */,
+				CF2D40AD27F8A5E200136775 /* AppDelegate-nouveau-transfert-pic.swift in Sources */,
+				CF2D409527F8A52000136775 /* AppDelegate.swift in Sources */,
+				CF2D40B727F8A5E200136775 /* DocumentJouerSon10bits.swift in Sources */,
+				CF260104280D76E6004FCDB1 /* AppDelegate-nouveau-transfert-rp2040.swift in Sources */,
+				CF260109280D9D75004FCDB1 /* Data-utilities.swift in Sources */,
+				CF8CA0B027FC787D0043D225 /* OpérationTéléchargementSon.swift in Sources */,
+				CF2600FE280D7503004FCDB1 /* DocumentTransfertRP2040.swift in Sources */,
+				CF8CA0B227FC9E110043D225 /* EntréeCatalogueSonDuDocument.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		CF260100280D7511004FCDB1 /* DocumentTransfertRP2040.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CF260101280D7511004FCDB1 /* Base */,
+			);
+			name = DocumentTransfertRP2040.xib;
+			sourceTree = "<group>";
+		};
+		CF2D409827F8A52200136775 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CF2D409927F8A52200136775 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		CF2D40D427F8A81000136775 /* DocumentJouerSon10bits.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CF2D40D527F8A81000136775 /* Base */,
+			);
+			name = DocumentJouerSon10bits.xib;
+			sourceTree = "<group>";
+		};
+		CF2D40D627F8A81000136775 /* DocumentCarteSon.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CF2D40D727F8A81000136775 /* Base */,
+			);
+			name = DocumentCarteSon.xib;
+			sourceTree = "<group>";
+		};
+		CF2D40D827F8A81000136775 /* DocumentTransfertPIC.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CF2D40D927F8A81000136775 /* Base */,
+			);
+			name = DocumentTransfertPIC.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		CF2D409C27F8A52200136775 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.6;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		CF2D409D27F8A52200136775 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.6;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		CF2D409F27F8A52200136775 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Trans-Fer/Trans_Fer.entitlements";
+				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = YW8QY74J2A;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Trans-Fer/Info.plist";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainNibFile = MainMenu;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 0.9;
+				PRODUCT_BUNDLE_IDENTIFIER = "name.pcmolinaro.pierre.Trans-Fer";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "";
+			};
+			name = Debug;
+		};
+		CF2D40A027F8A52200136775 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Trans-Fer/Trans_Fer.entitlements";
+				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = YW8QY74J2A;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Trans-Fer/Info.plist";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainNibFile = MainMenu;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 0.9;
+				PRODUCT_BUNDLE_IDENTIFIER = "name.pcmolinaro.pierre.Trans-Fer";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CF2D408C27F8A52000136775 /* Build configuration list for PBXProject "Trans-Fer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CF2D409C27F8A52200136775 /* Debug */,
+				CF2D409D27F8A52200136775 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CF2D409E27F8A52200136775 /* Build configuration list for PBXNativeTarget "Trans-Fer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CF2D409F27F8A52200136775 /* Debug */,
+				CF2D40A027F8A52200136775 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CFDF9CE4293BBA0000FE3985 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CFDF9CE5293BBA0000FE3985 /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CFDF9CE4293BBA0000FE3985 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = CF2D408927F8A52000136775 /* Project object */;
+}
