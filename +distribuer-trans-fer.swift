@@ -28,10 +28,10 @@ let BUILD_KIND = ProductKind.release
 // Version Trans-Fer
 //--------------------------------------------------------------------------------------------------
 
-let VERSION_TRANS_FER = "1.0.0"
+let VERSION_TRANS_FER = "1.0.1"
 let MAC_OS_MINIMUM_VERSION = "10.15"
 let NOTES : [String] = [
-  "Première version"
+  "Une mise à jour, pour vérifier que le mécanisme de mise à jour fonctionne correctement"
 ]
 let BUGFIXES : [String] = [
 ]
