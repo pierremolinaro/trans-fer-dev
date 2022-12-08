@@ -5,37 +5,17 @@
 import Foundation
 
 //--------------------------------------------------------------------------------------------------
-// Product Kind
-//--------------------------------------------------------------------------------------------------
-
-//enum ProductKind {
-//  case release
-//  case debug
-//
-//  var string : String {
-//    switch self {
-//      case .release : return "Release"
-//      case .debug   : return "Debug"
-//    }
-//  }
-//}
-
-//--------------------------------------------------------------------------------------------------
-
-//let BUILD_KIND = ProductKind.release
-
-//--------------------------------------------------------------------------------------------------
 // Version Trans-Fer
 //--------------------------------------------------------------------------------------------------
 
-let VERSION_TRANS_FER = "1.0.2"
+let VERSION_TRANS_FER = "1.0.3"
 let MAC_OS_MINIMUM_VERSION = "10.15"
 let NOTES : [String] = [
 ]
 let BUGFIXES : [String] = [
-  "Correction des liens dans « À propos de Trans-Fer »"
 ]
 let CHANGES : [String] = [
+  "L'archive .dmg contient maintenant l'application, et non plus un package d'installation"
 ]
 let NEWS : [String] = [
 ]
@@ -126,6 +106,7 @@ struct VersionDescriptor : Codable {
   var news = [String] ()
   var changes = [String] ()
   var date = ""
+  var contents = ""
   var osmin = ""
 }
 
@@ -177,54 +158,32 @@ do{
   let dataChaîneVersion = chaîneVersion.data (using: .utf8)!
   let local_xcconfig_FileFullPath = DISTRIBUTION_DIR + "/" + TRANS_FER_DIR + "/Trans-Fer/local.xcconfig"
   try dataChaîneVersion.write (to: URL (fileURLWithPath: local_xcconfig_FileFullPath), options: .atomic)
-//-------------------- Obtenir le numéro de build
-//  let plistFileFullPath = DISTRIBUTION_DIR + "/" + TRANS_FER_DIR + "/Trans-Fer/Trans-Fer/Info-" + BUILD_KIND.string + ".plist"
-//  let plistFileFullPath = DISTRIBUTION_DIR + "/" + TRANS_FER_DIR + "/Trans-Fer/Info.plist"
-//  let data : Data = try Data (contentsOf: URL (fileURLWithPath: plistFileFullPath))
-//  var plistDictionary : [String : Any]
-//  if let d = try PropertyListSerialization.propertyList (from: data, format: nil) as? [String : Any] {
-//    plistDictionary = d
-//  }else{
-//    print (RED + "line \(#line) : object is not a dictionary" + ENDC)
-//    exit (1)
-//  }
-////--- Mettre à jour les numéros de version dans la plist
-//  plistDictionary ["CFBundleVersion"] = VERSION_TRANS_FER + ", " + dateFormatter.string (from: dateConstruction)
-//  plistDictionary ["CFBundleShortVersionString"] = VERSION_TRANS_FER
-//  let plistNewData = try PropertyListSerialization.data (fromPropertyList: plistDictionary, format: .binary, options: 0)
-//  try plistNewData.write (to: URL (fileURLWithPath: plistFileFullPath), options: .atomic)
 //-------------------- Compiler le projet Xcode
   let debutCompilation = Date ()
   runCommand ("/bin/rm", ["-fr", "build"])
   runCommand (
     "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
-//    ["-target", "Trans-Fer-" + BUILD_KIND.string, "-configuration", BUILD_KIND.string]
     ["-target", "Trans-Fer", "-configuration", "Debug"]
   )
   let DureeCompilation = Date ().timeIntervalSince (debutCompilation)
   let PRODUCT_NAME : String = "Trans-Fer"
-//  switch BUILD_KIND {
-//  case .debug :
-//    PRODUCT_NAME = "Trans-Fer-Debug"
-//  case .release:
-//    PRODUCT_NAME = "Trans-Fer"
-//  }
 //-------------------- Copier l'application dans la racine du répertoire de distribution
-//  runCommand ("/bin/cp", ["-r", "build/" + BUILD_KIND.string + "/" + PRODUCT_NAME + ".app", DISTRIBUTION_DIR])
   runCommand ("/bin/cp", ["-r", "build/Debug/" + PRODUCT_NAME + ".app", DISTRIBUTION_DIR])
 //-------------------- Construction package
-  let packageFile = PRODUCT_NAME + "-" + VERSION_TRANS_FER + ".pkg"
-//  runCommand ("/usr/bin/productbuild", ["--component-compression", "auto", "--component", "build/" + BUILD_KIND.string + "/" + PRODUCT_NAME + ".app", "/Applications", packageFile])
-  runCommand ("/usr/bin/productbuild", ["--component-compression", "auto", "--component", "build/Debug/" + PRODUCT_NAME + ".app", "/Applications", packageFile])
-  runCommand ("/bin/cp", [packageFile, DISTRIBUTION_DIR])
+//  let packageFile = PRODUCT_NAME + "-" + VERSION_TRANS_FER + ".pkg"
+//  runCommand ("/usr/bin/productbuild", ["--component-compression", "auto", "--component", "build/Debug/" + PRODUCT_NAME + ".app", "/Applications", packageFile])
+//  runCommand ("/bin/cp", [packageFile, DISTRIBUTION_DIR])
 //-------------------- Créer l'archive de Cocoa canari
   let nomArchive = PRODUCT_NAME + "-" + VERSION_TRANS_FER
   runCommand ("/bin/mkdir", [nomArchive])
-  runCommand ("/bin/cp", [packageFile, nomArchive])
-  runCommand ("/usr/bin/hdiutil", ["create", "-srcfolder", nomArchive, nomArchive + ".dmg", "-fs", "HFS+"])
+//  runCommand ("/bin/cp", [packageFile, nomArchive])
+  runCommand ("/bin/mv", [DISTRIBUTION_DIR + "/" + PRODUCT_NAME + ".app", nomArchive])
+//  runCommand ("/bin/cp", ["-r", DISTRIBUTION_DIR + "/" + PRODUCT_NAME + ".app", nomArchive])
+  runCommand ("/bin/ln", ["-s", "/Applications", nomArchive + "/Applications"])
+  runCommand ("/usr/bin/hdiutil", ["create", "-srcfolder", nomArchive, nomArchive + ".dmg", "-format", "ULMO"]) // , "-fs", "HFS+"
   runCommand ("/bin/mv", [nomArchive + ".dmg", "../" + nomArchive + ".dmg"])
 //-------------------- Supprimer le fichier .pkg
-  runCommand ("/bin/rm", [DISTRIBUTION_DIR + "/" + packageFile])
+//  runCommand ("/bin/rm", [DISTRIBUTION_DIR + "/" + packageFile])
 //-------------------- Calculer la clé de la somme de contrôle de l'archive DMG pour Sparkle
   let signature = runHiddenCommand ("./distribution-trans-fer/sign_update", ["../" + nomArchive + ".dmg"])
   // print ("cleArchive '\(signature)'")
@@ -260,6 +219,7 @@ do{
   versionDescriptor.news = NEWS
   versionDescriptor.date = ISO8601DateFormatter ().string (from: dateConstruction)
   versionDescriptor.osmin = MAC_OS_MINIMUM_VERSION
+  versionDescriptor.contents = "application"
   let encoder = JSONEncoder ()
   encoder.outputFormatting = .prettyPrinted
   let jsonData = try encoder.encode (versionDescriptor)
