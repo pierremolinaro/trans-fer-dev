@@ -180,8 +180,8 @@ do{
   runCommand ("/bin/mv", [DISTRIBUTION_DIR + "/" + PRODUCT_NAME + ".app", nomArchive])
 //  runCommand ("/bin/cp", ["-r", DISTRIBUTION_DIR + "/" + PRODUCT_NAME + ".app", nomArchive])
   runCommand ("/bin/ln", ["-s", "/Applications", nomArchive + "/Applications"])
-  runCommand ("/usr/bin/hdiutil", ["create", "-srcfolder", nomArchive, nomArchive + ".dmg", "-format", "ULMO"]) // , "-fs", "HFS+"
-  runCommand ("/bin/mv", [nomArchive + ".dmg", "../" + nomArchive + ".dmg"])
+  runCommand ("/usr/bin/hdiutil", ["create", "-srcfolder", nomArchive, "../" + nomArchive + ".dmg", "-format", "ULMO"]) // , "-fs", "HFS+"
+//  runCommand ("/bin/mv", [nomArchive + ".dmg", "../" + nomArchive + ".dmg"])
 //-------------------- Supprimer le fichier .pkg
 //  runCommand ("/bin/rm", [DISTRIBUTION_DIR + "/" + packageFile])
 //-------------------- Calculer la clé de la somme de contrôle de l'archive DMG pour Sparkle
