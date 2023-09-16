@@ -44,7 +44,7 @@ extension UInt32 {
   //································································································
 
   private var mSon10bits = [UInt8] ()
-  private var mUserData : UserData? = nil
+//  private var mUserData : UserData? = nil
   private var mPossibleAudioQueue = AudioQueueRef (bitPattern: 0) ;
 
   //································································································
@@ -146,10 +146,10 @@ extension UInt32 {
     if let audioQueue = self.mPossibleAudioQueue {
       AudioQueueDispose (audioQueue, true)
     }
-    self.mUserData = UserData (self.mBoutonJouer8bits, self.mBoutonJouer10bits)
+//    self.mUserData = UserData (self.mBoutonJouer8bits, self.mBoutonJouer10bits)
     var status = AudioQueueNewOutput (&description,
                                       audioCallBack,
-                                      &self.mUserData, // User data
+                                      Unmanaged.passUnretained (self).toOpaque (), // User data, pass self as raw pointer
                                       nil, nil,
                                       0,
                                       &self.mPossibleAudioQueue)
@@ -220,10 +220,10 @@ extension UInt32 {
     if let audioQueue = self.mPossibleAudioQueue {
       AudioQueueDispose (audioQueue, true)
     }
-    self.mUserData = UserData (self.mBoutonJouer8bits, self.mBoutonJouer10bits)
+//    self.mUserData = UserData (self.mBoutonJouer8bits, self.mBoutonJouer10bits)
     var status = AudioQueueNewOutput (&description,
                                       audioCallBack,
-                                      &self.mUserData, // User data
+                                      Unmanaged.passUnretained (self).toOpaque (), // User data, pass self as raw pointer
                                       nil, nil,
                                       0,
                                       &self.mPossibleAudioQueue)
@@ -268,20 +268,21 @@ extension UInt32 {
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————
 
-private class UserData {
-  var mBoutonJouer8bits  : NSButton? = nil
-  var mBoutonJouer10bits : NSButton? = nil
-
-  init (_ inBoutonJouer8bits : NSButton?, _ inBoutonJouer10bits  : NSButton?) {
-    self.mBoutonJouer8bits  = inBoutonJouer8bits
-    self.mBoutonJouer10bits = inBoutonJouer10bits
-  }
-}
+//private struct UserData {
+//  private(set) var mBoutonJouer8bits  : NSButton? = nil
+//  private(set) var mBoutonJouer10bits : NSButton? = nil
+//
+//  init (_ inBoutonJouer8bits : NSButton?, _ inBoutonJouer10bits  : NSButton?) {
+//    self.mBoutonJouer8bits  = inBoutonJouer8bits
+//    self.mBoutonJouer10bits = inBoutonJouer10bits
+//  }
+//}
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————
 
 private let audioCallBack : AudioQueueOutputCallback = { inUserData, inAQ, inBuffer in
-  if let w = inUserData?.load (as: UserData.self) {
+  if let ptr = inUserData {
+    let w = Unmanaged <DocumentJouerSon10bits>.fromOpaque (ptr).takeUnretainedValue ()
     DispatchQueue.main.async {
       w.mBoutonJouer8bits?.isEnabled = true
       w.mBoutonJouer10bits?.isEnabled = true

@@ -1,28 +1,28 @@
 #! /usr/bin/swift
 
-//--------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
 
 import Foundation
 
-//--------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
 // Version Trans-Fer
-//--------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
 
-let VERSION_TRANS_FER = "1.0.3"
+let VERSION_TRANS_FER = "1.0.4"
 let MAC_OS_MINIMUM_VERSION = "10.15"
 let NOTES : [String] = [
 ]
 let BUGFIXES : [String] = [
 ]
 let CHANGES : [String] = [
-  "L'archive .dmg contient maintenant l'application, et non plus un package d'installation"
+  "Mise à jour avec un certificat non révoqué (?)"
 ]
 let NEWS : [String] = [
 ]
 
-//--------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
 //   FOR PRINTING IN COLOR
-//--------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
 
 let BLACK   = "\u{1B}[0;30m"
 let RED     = "\u{1B}[0;31m"
@@ -39,9 +39,9 @@ let BOLD_BLUE = BOLD + BLUE
 let BOLD_GREEN = BOLD + GREEN
 let BOLD_RED = BOLD + RED
 
-//--------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
 //   runCommand
-//--------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
 
 func runCommand (_ cmd : String, _ args : [String]) {
   var str = "+ " + cmd
@@ -58,9 +58,9 @@ func runCommand (_ cmd : String, _ args : [String]) {
   }
 }
 
-//--------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
 //   runHiddenCommand
-//--------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
 
 func runHiddenCommand (_ cmd : String, _ args : [String]) -> String {
   var str = "+ " + cmd
@@ -94,9 +94,9 @@ func runHiddenCommand (_ cmd : String, _ args : [String]) -> String {
   return String (data: data, encoding: .ascii)!
 }
 
-//--------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
 //   dictionaryFromJsonFile
-//--------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
 
 struct VersionDescriptor : Codable {
   var bugfixes = [String] ()
@@ -110,7 +110,7 @@ struct VersionDescriptor : Codable {
   var osmin = ""
 }
 
-//--------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
 
 let fm = FileManager ()
 //-------------------- Get script absolute path
@@ -128,7 +128,7 @@ fm.changeCurrentDirectoryPath (DISTRIBUTION_DIR)
 let TRANS_FER_DIR = "trans-fer-dev"
 //runCommand ("/bin/rm", ["-f", "archive.zip"])
 runCommand ("/bin/rm", ["-fr", TRANS_FER_DIR])
-runCommand ("/usr/local/bin/git", ["clone", "https://github.com/pierremolinaro/trans-fer-dev.git"])
+runCommand ("/usr/bin/git", ["clone", "https://github.com/pierremolinaro/trans-fer-dev.git"])
 fm.changeCurrentDirectoryPath (DISTRIBUTION_DIR + "/" + TRANS_FER_DIR)
 //-------------------- Obtenir l'année
 let ANNEE = Calendar.current.component (.year, from: Date ())
@@ -140,10 +140,10 @@ do{
   dateFormatter.locale = Locale(identifier: "en_US")
   dateFormatter.setLocalizedDateFormatFromTemplate("MMMMdYYYY") // set template after setting locale
 //-------------------- Obtenir le SHA du dernier commit
-//  var sha = runHiddenCommand ("/usr/local/bin/git", ["rev-parse", "--short", "HEAD"])
-  var sha = runHiddenCommand ("/usr/local/bin/git", ["rev-parse", "HEAD"])
+//  var sha = runHiddenCommand ("/usr/bin/git", ["rev-parse", "--short", "HEAD"])
+  var sha = runHiddenCommand ("/usr/bin/git", ["rev-parse", "HEAD"])
   _ = sha.removeLast () // Remove trailing LF
-//  let sha = runHiddenCommand ("/usr/local/bin/git", ["log", "-n1", "--format=format:\"%H\""])
+//  let sha = runHiddenCommand ("/usr/bin/git", ["log", "-n1", "--format=format:\"%H\""])
 //  Swift.print ("sha \(sha)")
 //-------------------- Écrire le SHA
   let fileRelativePath = "Trans-Fer/Credits.rtf"
@@ -248,4 +248,4 @@ do{
   print ("Exception \(error)")
 }
 
-//--------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
