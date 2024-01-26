@@ -21,11 +21,11 @@ fileprivate let SU_LAST_CHECK_TIME = "SULastCheckTime"
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————
 
-var gAppDelegate : AppDelegate? = nil
+@MainActor var gAppDelegate : AppDelegate? = nil
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————
 
-@main class AppDelegate : NSObject, NSApplicationDelegate {
+@MainActor @main class AppDelegate : NSObject, NSApplicationDelegate {
 
   //································································································
 

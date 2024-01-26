@@ -10,7 +10,7 @@ import AppKit
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————
 
-@objc(DocumentTransfertPIC) class DocumentTransfertPIC : NSDocument {
+@MainActor @objc(DocumentTransfertPIC) class DocumentTransfertPIC : NSDocument {
 
   //································································································
 
@@ -127,15 +127,17 @@ import AppKit
   //································································································
 
   override func read (from inData : Data, ofType typeName: String) throws {
-    self.undoManager?.disableUndoRegistration ()
-    let s = String (data: inData, encoding: .utf8)!
-    let components = s.components (separatedBy: "\n")
-    self.mNomFirmware = components [0]
-    self.mNomUpdater = components [1]
-    self.mOptimisation = components [2] == "1"
-    self.mSignature = components [3]
-    self.mAdressesCAN = components [4]
-    self.undoManager?.enableUndoRegistration ()
+    DispatchQueue.main.async {
+      self.undoManager?.disableUndoRegistration ()
+        let s = String (data: inData, encoding: .utf8)!
+        let components = s.components (separatedBy: "\n")
+        self.mNomFirmware = components [0]
+        self.mNomUpdater = components [1]
+        self.mOptimisation = components [2] == "1"
+        self.mSignature = components [3]
+        self.mAdressesCAN = components [4]
+      self.undoManager?.enableUndoRegistration ()
+    }
   }
 
   //································································································

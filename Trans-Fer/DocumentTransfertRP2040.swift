@@ -104,13 +104,15 @@ fileprivate let ARDUINO_BUILD_DIR = "arduino-build"
   //································································································
 
   override func read (from inData : Data, ofType typeName: String) throws {
-    self.undoManager?.disableUndoRegistration ()
-    let s = String (data: inData, encoding: .utf8)!
-    let components = s.components (separatedBy: "\n")
-    self.mNomDossierCroquis = components [0]
-    self.mSignature = components [1]
-    self.mAdressesCAN = components [2]
-    self.undoManager?.enableUndoRegistration ()
+    DispatchQueue.main.async {
+      self.undoManager?.disableUndoRegistration ()
+        let s = String (data: inData, encoding: .utf8)!
+        let components = s.components (separatedBy: "\n")
+        self.mNomDossierCroquis = components [0]
+        self.mSignature = components [1]
+        self.mAdressesCAN = components [2]
+      self.undoManager?.enableUndoRegistration ()
+    }
   }
 
   //································································································

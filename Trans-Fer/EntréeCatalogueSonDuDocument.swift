@@ -17,7 +17,7 @@ enum DescriptionEntréeCatalogueSonDuDocument {
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————
 
-class EntréeCatalogueSonDuDocument : NSObject {
+@MainActor class EntréeCatalogueSonDuDocument : NSObject {
 
   //------------------------------------------------------------------------------------------------
 

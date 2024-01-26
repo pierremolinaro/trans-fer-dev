@@ -75,9 +75,11 @@ extension UInt32 {
   //································································································
 
   override func read (from inData : Data, ofType typeName: String) throws {
-    self.undoManager?.disableUndoRegistration ()
-    self.mSon10bits = [UInt8] (inData)
-    self.undoManager?.enableUndoRegistration ()
+    DispatchQueue.main.async {
+      self.undoManager?.disableUndoRegistration ()
+      self.mSon10bits = [UInt8] (inData)
+      self.undoManager?.enableUndoRegistration ()
+    }
   }
 
   //································································································

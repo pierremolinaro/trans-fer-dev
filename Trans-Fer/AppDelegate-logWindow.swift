@@ -10,43 +10,43 @@ import AppKit
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————
 
-func showLogWindow () {
+@MainActor func showLogWindow () {
   gAppDelegate?.mLogWindow?.makeKeyAndOrderFront (nil)
 }
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————
 
-func clearLogWindow () {
+@MainActor func clearLogWindow () {
   gAppDelegate?.clear ()
 }
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————
 
-func appendMessageString (_ inString : String) {
+@MainActor func appendMessageString (_ inString : String) {
   gAppDelegate?.appendMessageString (inString)
 }
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————
 
-func appendCommandString (_ inString : String) {
+@MainActor func appendCommandString (_ inString : String) {
   gAppDelegate?.appendCommandString (inString)
 }
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————
 
-func appendErrorString (_ inString : String) {
+@MainActor func appendErrorString (_ inString : String) {
   gAppDelegate?.appendErrorString (inString)
 }
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————
 
-func appendWarningString (_ inString : String) {
+@MainActor func appendWarningString (_ inString : String) {
   gAppDelegate?.appendWarningString (inString)
 }
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————
 
-func appendSuccessString (_ inString : String) {
+@MainActor func appendSuccessString (_ inString : String) {
   gAppDelegate?.appendSuccessString (inString)
 }
 

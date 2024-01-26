@@ -114,7 +114,7 @@ protocol ProtocoleOpérationCarteSon : AnyObject {
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————
 
-@objc(DocumentCarteSon) class DocumentCarteSon : NSDocument {
+@MainActor @objc(DocumentCarteSon) class DocumentCarteSon : NSDocument {
 
   //································································································
 
@@ -179,7 +179,9 @@ protocol ProtocoleOpérationCarteSon : AnyObject {
   //································································································
 
   deinit {
-    self.stop ()
+    DispatchQueue.main.async {
+      self.stop ()
+    }
   }
 
   //································································································
@@ -204,16 +206,18 @@ protocol ProtocoleOpérationCarteSon : AnyObject {
 
   override func read (from inData : Data, ofType typeName: String) throws {
     let s = String (data: inData, encoding: .utf8)!
-    var array = s.components (separatedBy: "\n")
-    self.undoManager?.disableUndoRegistration ()
-      self.mNumeroCarteSon = Int (array [0])!
-      array.removeFirst ()
-      var catalogue = [EntréeCatalogueSonDuDocument] ()
-      for entrée in array {
-        catalogue.append (EntréeCatalogueSonDuDocument (chaîne: entrée))
-      }
-      self.initialiserCatalogueDocument (catalogue)
-    self.undoManager?.enableUndoRegistration ()
+    DispatchQueue.main.async {
+      var array = s.components (separatedBy: "\n")
+      self.undoManager?.disableUndoRegistration ()
+        self.mNumeroCarteSon = Int (array [0])!
+        array.removeFirst ()
+        var catalogue = [EntréeCatalogueSonDuDocument] ()
+        for entrée in array {
+          catalogue.append (EntréeCatalogueSonDuDocument (chaîne: entrée))
+        }
+        self.initialiserCatalogueDocument (catalogue)
+      self.undoManager?.enableUndoRegistration ()
+    }
   }
 
   //································································································
@@ -281,24 +285,26 @@ protocol ProtocoleOpérationCarteSon : AnyObject {
 
   //································································································
 
-  private func didChange (state inState : NWConnection.State) {
-    switch inState {
-    case .setup :
-      self.mCommentaireProgression?.stringValue = "Configuration connxion en cours…"
-    case .waiting (let error) :
-      self.mCommentaireProgression?.stringValue = "Attente connexion \(error)…"
-    case .preparing:
-      self.mCommentaireProgression?.stringValue = "Préparation connexion…"
-    case .ready:
-      self.mCommentaireProgression?.stringValue = ""
-      self.envoyerTrames ()
-    case .failed (let error) :
-      self.mCommentaireProgression?.stringValue = "Échec connexion, erreur \(error)"
-      self.stop ()
-    case .cancelled :
-      self.stop ()
-    @unknown default:
-      ()
+  @Sendable nonisolated private func stateDidChange (to inState : NWConnection.State) {
+    DispatchQueue.main.async {
+      switch inState {
+      case .setup :
+        self.mCommentaireProgression?.stringValue = "Configuration connexion en cours…"
+      case .waiting (let error) :
+        self.mCommentaireProgression?.stringValue = "Attente connexion \(error)…"
+      case .preparing:
+        self.mCommentaireProgression?.stringValue = "Préparation connexion…"
+      case .ready:
+        self.mCommentaireProgression?.stringValue = ""
+        self.envoyerTrames ()
+      case .failed (let error) :
+        self.mCommentaireProgression?.stringValue = "Échec connexion, erreur \(error)"
+        self.stop ()
+      case .cancelled :
+        self.stop ()
+      @unknown default:
+        ()
+      }
     }
   }
 
@@ -315,63 +321,65 @@ protocol ProtocoleOpérationCarteSon : AnyObject {
 
   private func startReceive () {
     self.mConnection?.receive (minimumIncompleteLength: 10, maximumLength: 1000) { inData, _, inIsDone, inError in
-      if let data = inData, !data.isEmpty {
-        // Swift.print ("did receive, data: \(data)")
-        self.mReceivedData += data
-        while self.mReceivedData.count >= 10 {
-          let service = self.mReceivedData [0]
-          let length = min (8, Int (self.mReceivedData [1]))
-          var données = [UInt8] ()
-          if length > 0 {
-            for i in 0 ..< length {
-              données.append (self.mReceivedData [i + 2])
-            }
-          }
-          self.mReceivedData.removeFirst (10)
-          let trameReçue = Trame (codeService: service, données: données)
-          self.mOpération?.réception (trameReçue: trameReçue, tramesÀEnvoyer: &self.mTramesÀEnvoyer)
-          self.mFenêtreEnvoi += 1
-          self.mTramesReçues += 1
-          self.envoyerTrames ()
-          if let opération = self.mOpération {
-            let (progression, total, terminé) = opération.progression ()
-            if (total == progression) || (total == 0) || (progression == 0) {
-              self.mIndicateurProgression?.isIndeterminate = true
-            }else{
-              self.mIndicateurProgression?.isIndeterminate = false
-              self.mIndicateurProgression?.maxValue = Double (total)
-              self.mIndicateurProgression?.doubleValue = Double (progression)
-              let duréeÉcoulée = Date ().timeIntervalSince (self.mDateDébutOpération)
-              let duréeRestante = duréeÉcoulée * Double (total - progression) / Double (progression)
-              let perCent = (100.0 * Double (progression)) / Double (total)
-              let s = "\(String (format: "%.1f", arguments: [perCent]))%, trames envoyées \(self.mTramesEnvoyées), reçues \(self.mTramesReçues), durée restante :\(duréeRestante.chaîneDuréeS)"
-              self.mCommentaireProgression?.stringValue = s
-            }
-            if terminé {
-              self.stop ()
-              if let dialog = self.mPanelOperation, let parent = dialog.sheetParent {
-                parent.endSheet (dialog, returnCode: .stop)
+      DispatchQueue.main.async {
+        if let data = inData, !data.isEmpty {
+          // Swift.print ("did receive, data: \(data)")
+          self.mReceivedData += data
+          while self.mReceivedData.count >= 10 {
+            let service = self.mReceivedData [0]
+            let length = min (8, Int (self.mReceivedData [1]))
+            var données = [UInt8] ()
+            if length > 0 {
+              for i in 0 ..< length {
+                données.append (self.mReceivedData [i + 2])
               }
-              self.mOpérationAchevée? (opération)
-              self.mOpération = nil
-              self.mOpérationAchevée = nil
-              let duration = Date ().timeIntervalSince (self.mDateDébutOpération)
-              Swift.print ("Terminé en\(duration.chaîneDuréeMS)")
+            }
+            self.mReceivedData.removeFirst (10)
+            let trameReçue = Trame (codeService: service, données: données)
+            self.mOpération?.réception (trameReçue: trameReçue, tramesÀEnvoyer: &self.mTramesÀEnvoyer)
+            self.mFenêtreEnvoi += 1
+            self.mTramesReçues += 1
+            self.envoyerTrames ()
+            if let opération = self.mOpération {
+              let (progression, total, terminé) = opération.progression ()
+              if (total == progression) || (total == 0) || (progression == 0) {
+                self.mIndicateurProgression?.isIndeterminate = true
+              }else{
+                self.mIndicateurProgression?.isIndeterminate = false
+                self.mIndicateurProgression?.maxValue = Double (total)
+                self.mIndicateurProgression?.doubleValue = Double (progression)
+                let duréeÉcoulée = Date ().timeIntervalSince (self.mDateDébutOpération)
+                let duréeRestante = duréeÉcoulée * Double (total - progression) / Double (progression)
+                let perCent = (100.0 * Double (progression)) / Double (total)
+                let s = "\(String (format: "%.1f", arguments: [perCent]))%, trames envoyées \(self.mTramesEnvoyées), reçues \(self.mTramesReçues), durée restante :\(duréeRestante.chaîneDuréeS)"
+                self.mCommentaireProgression?.stringValue = s
+              }
+              if terminé {
+                self.stop ()
+                if let dialog = self.mPanelOperation, let parent = dialog.sheetParent {
+                  parent.endSheet (dialog, returnCode: .stop)
+                }
+                self.mOpérationAchevée? (opération)
+                self.mOpération = nil
+                self.mOpérationAchevée = nil
+                let duration = Date ().timeIntervalSince (self.mDateDébutOpération)
+                Swift.print ("Terminé en\(duration.chaîneDuréeMS)")
+              }
             }
           }
+          if let _ = inError {
+            // Swift.print ("did receive, error: \(error)")
+            self.stop ()
+            return
+          }
+          if inIsDone {
+            // Swift.print ("did receive, EOF")
+            self.stop ()
+            return
+          }
+          self.startReceive ()
         }
       }
-      if let _ = inError {
-        // Swift.print ("did receive, error: \(error)")
-        self.stop ()
-        return
-      }
-      if inIsDone {
-        // Swift.print ("did receive, EOF")
-        self.stop ()
-        return
-      }
-      self.startReceive ()
     }
   }
 
@@ -414,7 +422,7 @@ protocol ProtocoleOpérationCarteSon : AnyObject {
       let host = NWEndpoint.Host (adresseIPcarteMezzanine)
       let port = NWEndpoint.Port (8144)
       self.mConnection = NWConnection (host: host, port: port, using: .tcp)
-      self.mConnection?.stateUpdateHandler = self.didChange (state:)
+      self.mConnection?.stateUpdateHandler = self.stateDidChange (to:)
       self.startReceive ()
       self.mConnection?.start (queue: .main)
     //--- Afficher le panel
