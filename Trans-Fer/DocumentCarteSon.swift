@@ -139,7 +139,7 @@ protocol ProtocoleOpérationCarteSon : AnyObject {
 
   //································································································
 
-  @objc var mNumeroCarteSon : Int = 0 {
+  @objc dynamic var mNumeroCarteSon : Int = 0 {
     didSet {
       if self.mNumeroCarteSon != oldValue {
         self.undoManager?.registerUndo (withTarget: self) {

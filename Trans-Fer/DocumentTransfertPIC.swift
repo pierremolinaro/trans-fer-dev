@@ -48,7 +48,7 @@ import AppKit
   
   //································································································
 
-  @objc private var mNomFirmware : String = "" {
+  @objc private dynamic var mNomFirmware : String = "" {
     didSet {
       self.undoManager?.registerUndo (withTarget: self) {
         $0.willChangeValue (forKey: "mNomFirmware")
@@ -60,7 +60,7 @@ import AppKit
 
   //································································································
 
-  @objc private var mNomUpdater : String = "" {
+  @objc private dynamic var mNomUpdater : String = "" {
     didSet {
       self.undoManager?.registerUndo (withTarget: self) {
         $0.willChangeValue (forKey: "mNomUpdater")
@@ -72,7 +72,7 @@ import AppKit
 
   //································································································
 
-  @objc private var mOptimisation : Bool = true {
+  @objc private dynamic var mOptimisation : Bool = true {
     didSet {
       self.undoManager?.registerUndo (withTarget: self) {
         $0.willChangeValue (forKey: "mOptimisation")
@@ -84,7 +84,7 @@ import AppKit
 
   //································································································
 
-  @objc private var mSignature : String = "??????" {
+  @objc private dynamic var mSignature : String = "??????" {
     didSet {
       self.undoManager?.registerUndo (withTarget: self) {
         $0.willChangeValue (forKey: "mSignature")
@@ -96,7 +96,7 @@ import AppKit
 
   //································································································
 
-  @objc private var mAdressesCAN : String = "" {
+  @objc private dynamic var mAdressesCAN : String = "" {
     didSet {
       self.undoManager?.registerUndo (withTarget: self) {
         $0.willChangeValue (forKey: "mAdressesCAN")

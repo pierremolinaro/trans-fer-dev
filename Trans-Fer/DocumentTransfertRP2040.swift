@@ -47,7 +47,7 @@ fileprivate let ARDUINO_BUILD_DIR = "arduino-build"
   
   //································································································
 
-  @objc private var mNomDossierCroquis : String = "" {
+  @objc private dynamic var mNomDossierCroquis : String = "" {
     didSet {
       self.undoManager?.registerUndo (withTarget: self) {
         $0.willChangeValue (forKey: "mNomDossierCroquis")
@@ -63,7 +63,7 @@ fileprivate let ARDUINO_BUILD_DIR = "arduino-build"
 
   //································································································
 
-  @objc private var mSignature : String = "??????" {
+  @objc private dynamic var mSignature : String = "??????" {
     didSet {
       self.undoManager?.registerUndo (withTarget: self) {
         $0.willChangeValue (forKey: "mSignature")
@@ -75,7 +75,7 @@ fileprivate let ARDUINO_BUILD_DIR = "arduino-build"
 
   //································································································
 
-  @objc private var mAdressesCAN : String = "" {
+  @objc private dynamic var mAdressesCAN : String = "" {
     didSet {
       self.undoManager?.registerUndo (withTarget: self) {
         $0.willChangeValue (forKey: "mAdressesCAN")

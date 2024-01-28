@@ -8,14 +8,14 @@ import Foundation
 // Version Trans-Fer
 //----------------------------------------------------------------------------------------
 
-let VERSION_TRANS_FER = "1.0.4"
+let VERSION_TRANS_FER = "1.0.5"
 let MAC_OS_MINIMUM_VERSION = "10.15"
 let NOTES : [String] = [
 ]
 let BUGFIXES : [String] = [
 ]
 let CHANGES : [String] = [
-  "Mise à jour avec un certificat non révoqué (?)"
+  "Mise à jour pour Sonoma (OSX 14) et Xcode 15.3 beta1"
 ]
 let NEWS : [String] = [
 ]
