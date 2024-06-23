@@ -193,18 +193,30 @@ protocol ProtocoleOpérationCarteSon : AnyObject {
   //································································································
 
   override func data (ofType typeName: String) throws -> Data {
-    var array = ["\(self.mNumeroCarteSon)"]
+    var array = [DescriptionEntréeCatalogueSonDuDocument] ()
     for entrée in self.mCatalogueSonDuDocument {
-      array.append (entrée.chaînePourEnregistrement ())
+      array.append (entrée.descriptionSon)
     }
-    let s = array.joined (separator: "\n")
-    let data = s.data (using: .utf8)!
+    let encoder = JSONEncoder ()
+    encoder.outputFormatting = [.sortedKeys, .prettyPrinted]
+    let data = try encoder.encode (array)
+
+//    var array = ["\(self.mNumeroCarteSon)"]
+//    for entrée in self.mCatalogueSonDuDocument {
+//      array.append (entrée.chaînePourEnregistrement ())
+//    }
+//    let s = array.joined (separator: "\n")
+//    let data = s.data (using: .utf8)!
     return data
   }
 
   //································································································
 
   override func read (from inData : Data, ofType typeName: String) throws {
+    let decoder = JSONDecoder ()
+    let array = try decoder.decode (DescriptionEntréeCatalogueSonDuDocument.self, from: inData)
+
+
     let s = String (data: inData, encoding: .utf8)!
     DispatchQueue.main.async {
       var array = s.components (separatedBy: "\n")

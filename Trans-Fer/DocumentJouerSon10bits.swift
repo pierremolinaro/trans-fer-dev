@@ -85,45 +85,51 @@ extension UInt32 {
   //································································································
 
   override func windowControllerDidLoadNib (_ windowController : NSWindowController) {
-    self.mTailleFichierTextField?.stringValue = "Taille du fichier : \(self.mSon10bits.count) octets"
-    self.mNombreÉchantillonsTextField?.stringValue = "Nombre d'échantillons : \(self.mSon10bits.count / 5)"
-    let duréeExécutionMS = Int ((Double (self.mSon10bits.count) * 4.0 / 5.0) / 15.625)
-    var s = ""
-    if duréeExécutionMS >= 1_000 {
-      s += " \(duréeExécutionMS / 1_000) s"
-    }
-    if (duréeExécutionMS % 1_000) != 0 {
-      s += " \(duréeExécutionMS % 1_000) ms"
-    }
-    self.mDuréeExécutionTextField?.stringValue = "Durée :\(s)"
-    self.mBoutonJouer8bits?.target = self
-    self.mBoutonJouer8bits?.action = #selector (Self.jouerSon8bits (_:))
-    self.mBoutonJouer10bits?.target = self
-    self.mBoutonJouer10bits?.action = #selector (Self.jouerSon10bits (_:))
-    var extensionByte : UInt8 = 0
-    var cumul = 0
-    var minimum = UInt16.max
-    var maximum = UInt16.min
-    for i in 0 ..< self.mSon10bits.count {
-      if (i % 5) == 0 {
-        extensionByte = self.mSon10bits [i]
-      }else{
-        var v = UInt16 (self.mSon10bits [i])
-        v <<= 2
-        v |= UInt16 (extensionByte) >> 6
-        cumul += Int (v)
-        minimum = min (minimum, v)
-        maximum = max (maximum, v)
-        extensionByte <<= 2
+    DispatchQueue.main.async {
+      self.mTailleFichierTextField?.stringValue = "Taille du fichier : \(self.mSon10bits.count) octets"
+      self.mNombreÉchantillonsTextField?.stringValue = "Nombre d'échantillons : \(self.mSon10bits.count / 5)"
+      let duréeExécutionMS = Int ((Double (self.mSon10bits.count) * 4.0 / 5.0) / 15.625)
+      var s = ""
+      if duréeExécutionMS >= 1_000 {
+        s += " \(duréeExécutionMS / 1_000) s"
       }
+      if (duréeExécutionMS % 1_000) != 0 {
+        s += " \(duréeExécutionMS % 1_000) ms"
+      }
+      self.mDuréeExécutionTextField?.stringValue = "Durée :\(s)"
+      self.mBoutonJouer8bits?.target = self
+      self.mBoutonJouer8bits?.action = #selector (Self.jouerSon8bits (_:))
+      self.mBoutonJouer10bits?.target = self
+      self.mBoutonJouer10bits?.action = #selector (Self.jouerSon10bits (_:))
+      var extensionByte : UInt8 = 0
+      var cumul = 0
+      var minimum = UInt16.max
+      var maximum = UInt16.min
+      for i in 0 ..< self.mSon10bits.count {
+        if (i % 5) == 0 {
+          extensionByte = self.mSon10bits [i]
+        }else{
+          var v = UInt16 (self.mSon10bits [i])
+          v <<= 2
+          v |= UInt16 (extensionByte) >> 6
+          cumul += Int (v)
+          minimum = min (minimum, v)
+          maximum = max (maximum, v)
+          extensionByte <<= 2
+        }
+      }
+      if self.mSon10bits.count == 0 {
+        self.mMinMaxMoyenneTextField?.stringValue = ""
+      }else{
+        self.mMinMaxMoyenneTextField?.stringValue = "Minimum : \(minimum), maximum : \(maximum), moyenne : \(cumul / self.mSon10bits.count)"
+      }
+    //--- Calcul crc
+      var crc : UInt32 = ~0
+      for byte in self.mSon10bits {
+        accumulateByteWithLookUpTable (byte: byte, crc: &crc)
+      }
+      self.mCRCTextField?.stringValue = "CRC : \(crc.hexString)"
     }
-    self.mMinMaxMoyenneTextField?.stringValue = "Minimum : \(minimum), maximum : \(maximum), moyenne : \(cumul / self.mSon10bits.count)"
-  //--- Calcul crc
-    var crc : UInt32 = ~0
-    for byte in self.mSon10bits {
-      accumulateByteWithLookUpTable (byte: byte, crc: &crc)
-    }
-    self.mCRCTextField?.stringValue = "CRC : \(crc.hexString)"
   }
 
   //································································································
@@ -192,7 +198,6 @@ extension UInt32 {
   @objc func jouerSon10bits (_ inSender : Any?) {
     var data10Bits = [UInt16] ()
     var extensionByte : UInt8 = 0
-    //var cumul = 0
     for i in 0 ..< self.mSon10bits.count {
       if (i % 5) == 0 {
         extensionByte = self.mSon10bits [i]
@@ -201,13 +206,11 @@ extension UInt32 {
         let e = Int16 (extensionByte) >> 6
         v <<= 7
         v |= e << 5
-        //cumul += Int (v)
         v -= 16_383
         data10Bits.append (UInt16 (bitPattern: v).byteSwapped)
         extensionByte <<= 2
       }
     }
-    //Swift.print ("Moyenne \(cumul / self.mSon10bits.count)")
     var description = AudioStreamBasicDescription ()
     description.mSampleRate = 15_625.0
     description.mFormatID = kAudioFormatLinearPCM

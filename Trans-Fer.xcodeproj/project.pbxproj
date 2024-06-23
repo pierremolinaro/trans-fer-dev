@@ -24,9 +24,7 @@
 		CF2D40AF27F8A5E200136775 /* carteSon.icns in Resources */ = {isa = PBXBuildFile; fileRef = CF2D40A327F8A5E200136775 /* carteSon.icns */; };
 		CF2D40B027F8A5E200136775 /* son10bits.icns in Resources */ = {isa = PBXBuildFile; fileRef = CF2D40A427F8A5E200136775 /* son10bits.icns */; };
 		CF2D40B127F8A5E200136775 /* AppDelegate-logWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2D40A527F8A5E200136775 /* AppDelegate-logWindow.swift */; };
-		CF2D40B227F8A5E200136775 /* OpérationLectureCatalogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2D40A627F8A5E200136775 /* OpérationLectureCatalogue.swift */; };
 		CF2D40B327F8A5E200136775 /* AppDelegate-nouveau-son.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2D40A727F8A5E200136775 /* AppDelegate-nouveau-son.swift */; };
-		CF2D40B427F8A5E200136775 /* DocumentCarteSon.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2D40A827F8A5E200136775 /* DocumentCarteSon.swift */; };
 		CF2D40B527F8A5E200136775 /* AppDelegate-nouvelle-carte-son.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2D40A927F8A5E200136775 /* AppDelegate-nouvelle-carte-son.swift */; };
 		CF2D40B627F8A5E200136775 /* DocumentTransfertPIC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2D40AA27F8A5E200136775 /* DocumentTransfertPIC.swift */; };
 		CF2D40B727F8A5E200136775 /* DocumentJouerSon10bits.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2D40AB27F8A5E200136775 /* DocumentJouerSon10bits.swift */; };
@@ -35,9 +33,11 @@
 		CF2D40DB27F8A81000136775 /* DocumentCarteSon.xib in Resources */ = {isa = PBXBuildFile; fileRef = CF2D40D627F8A81000136775 /* DocumentCarteSon.xib */; };
 		CF2D40DC27F8A81000136775 /* DocumentTransfertPIC.xib in Resources */ = {isa = PBXBuildFile; fileRef = CF2D40D827F8A81000136775 /* DocumentTransfertPIC.xib */; };
 		CF37845C27FC51870059EF42 /* crc.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF37845B27FC51870059EF42 /* crc.swift */; };
+		CF68CE9D2BFFC48400200EFD /* DocumentCarteSon.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF68CE9B2BFFC48400200EFD /* DocumentCarteSon.swift */; };
+		CF68CE9E2BFFC48400200EFD /* EntréeCatalogueSonDuDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF68CE9C2BFFC48400200EFD /* EntréeCatalogueSonDuDocument.swift */; };
+		CF68CEA12BFFC5E700200EFD /* OpérationLectureCatalogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF68CE9F2BFFC5E700200EFD /* OpérationLectureCatalogue.swift */; };
+		CF68CEA22BFFC5E700200EFD /* OpérationTéléchargementSon.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF68CEA02BFFC5E700200EFD /* OpérationTéléchargementSon.swift */; };
 		CF76469827FC6762001F3D1A /* EntréeCatalogueSonDuPic.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF76469727FC6762001F3D1A /* EntréeCatalogueSonDuPic.swift */; };
-		CF8CA0B027FC787D0043D225 /* OpérationTéléchargementSon.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8CA0AF27FC787D0043D225 /* OpérationTéléchargementSon.swift */; };
-		CF8CA0B227FC9E110043D225 /* EntréeCatalogueSonDuDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8CA0B127FC9E110043D225 /* EntréeCatalogueSonDuDocument.swift */; };
 		CFAD4218293CBB6200D4C6E9 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = CFAD4217293CBB6100D4C6E9 /* Credits.rtf */; };
 		CFDF9CE6293BBA0000FE3985 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = CFDF9CE5293BBA0000FE3985 /* Sparkle */; };
 /* End PBXBuildFile section */
@@ -62,9 +62,7 @@
 		CF2D40A327F8A5E200136775 /* carteSon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = carteSon.icns; sourceTree = "<group>"; };
 		CF2D40A427F8A5E200136775 /* son10bits.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = son10bits.icns; sourceTree = "<group>"; };
 		CF2D40A527F8A5E200136775 /* AppDelegate-logWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate-logWindow.swift"; sourceTree = "<group>"; };
-		CF2D40A627F8A5E200136775 /* OpérationLectureCatalogue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OpérationLectureCatalogue.swift"; sourceTree = "<group>"; };
 		CF2D40A727F8A5E200136775 /* AppDelegate-nouveau-son.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate-nouveau-son.swift"; sourceTree = "<group>"; };
-		CF2D40A827F8A5E200136775 /* DocumentCarteSon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentCarteSon.swift; sourceTree = "<group>"; };
 		CF2D40A927F8A5E200136775 /* AppDelegate-nouvelle-carte-son.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate-nouvelle-carte-son.swift"; sourceTree = "<group>"; };
 		CF2D40AA27F8A5E200136775 /* DocumentTransfertPIC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentTransfertPIC.swift; sourceTree = "<group>"; };
 		CF2D40AB27F8A5E200136775 /* DocumentJouerSon10bits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentJouerSon10bits.swift; sourceTree = "<group>"; };
@@ -74,9 +72,11 @@
 		CF2D40D727F8A81000136775 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DocumentCarteSon.xib; sourceTree = "<group>"; };
 		CF2D40D927F8A81000136775 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DocumentTransfertPIC.xib; sourceTree = "<group>"; };
 		CF37845B27FC51870059EF42 /* crc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = crc.swift; sourceTree = "<group>"; };
+		CF68CE9B2BFFC48400200EFD /* DocumentCarteSon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentCarteSon.swift; sourceTree = "<group>"; };
+		CF68CE9C2BFFC48400200EFD /* EntréeCatalogueSonDuDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EntréeCatalogueSonDuDocument.swift"; sourceTree = "<group>"; };
+		CF68CE9F2BFFC5E700200EFD /* OpérationLectureCatalogue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OpérationLectureCatalogue.swift"; sourceTree = "<group>"; };
+		CF68CEA02BFFC5E700200EFD /* OpérationTéléchargementSon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OpérationTéléchargementSon.swift"; sourceTree = "<group>"; };
 		CF76469727FC6762001F3D1A /* EntréeCatalogueSonDuPic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EntréeCatalogueSonDuPic.swift"; sourceTree = "<group>"; };
-		CF8CA0AF27FC787D0043D225 /* OpérationTéléchargementSon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OpérationTéléchargementSon.swift"; sourceTree = "<group>"; };
-		CF8CA0B127FC9E110043D225 /* EntréeCatalogueSonDuDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EntréeCatalogueSonDuDocument.swift"; sourceTree = "<group>"; };
 		CFAD4217293CBB6100D4C6E9 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		CFB139A0293CC42E0025DC1F /* local.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = local.xcconfig; path = "Trans-Fer/local.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -113,6 +113,7 @@
 		CF2D409327F8A52000136775 /* Trans-Fer */ = {
 			isa = PBXGroup;
 			children = (
+				CF68CE9A2BFFC45500200EFD /* Document Carte Son */,
 				CF2D40AC27F8A5E200136775 /* AppDelegate-conversion-son.swift */,
 				CF2D40A527F8A5E200136775 /* AppDelegate-logWindow.swift */,
 				CF2D40A727F8A5E200136775 /* AppDelegate-nouveau-son.swift */,
@@ -126,7 +127,6 @@
 				CF37845B27FC51870059EF42 /* crc.swift */,
 				CFAD4217293CBB6100D4C6E9 /* Credits.rtf */,
 				CF260108280D9D75004FCDB1 /* Data-utilities.swift */,
-				CF2D40A827F8A5E200136775 /* DocumentCarteSon.swift */,
 				CF2D40D627F8A81000136775 /* DocumentCarteSon.xib */,
 				CF2D40AB27F8A5E200136775 /* DocumentJouerSon10bits.swift */,
 				CF2D40D427F8A81000136775 /* DocumentJouerSon10bits.xib */,
@@ -137,18 +137,27 @@
 				CF26010F280DA869004FCDB1 /* DocumentTransfertRP2040-construire-binpic.swift */,
 				CF2600FC280D7502004FCDB1 /* DocumentTransfertRP2040.swift */,
 				CF260100280D7511004FCDB1 /* DocumentTransfertRP2040.xib */,
-				CF8CA0B127FC9E110043D225 /* EntréeCatalogueSonDuDocument.swift */,
 				CF76469727FC6762001F3D1A /* EntréeCatalogueSonDuPic.swift */,
 				CF2D40D327F8A69A00136775 /* Info.plist */,
 				CF2D409827F8A52200136775 /* MainMenu.xib */,
-				CF2D40A627F8A5E200136775 /* OpérationLectureCatalogue.swift */,
-				CF8CA0AF27FC787D0043D225 /* OpérationTéléchargementSon.swift */,
 				CF2D40A427F8A5E200136775 /* son10bits.icns */,
 				CF2D409B27F8A52200136775 /* Trans_Fer.entitlements */,
 				CF2D40A227F8A5E200136775 /* TransfertPIC.icns */,
 				CF2600FD280D7502004FCDB1 /* TransfertRP2040.icns */,
 			);
 			path = "Trans-Fer";
+			sourceTree = "<group>";
+		};
+		CF68CE9A2BFFC45500200EFD /* Document Carte Son */ = {
+			isa = PBXGroup;
+			children = (
+				CF68CE9B2BFFC48400200EFD /* DocumentCarteSon.swift */,
+				CF68CE9C2BFFC48400200EFD /* EntréeCatalogueSonDuDocument.swift */,
+				CF68CE9F2BFFC5E700200EFD /* OpérationLectureCatalogue.swift */,
+				CF68CEA02BFFC5E700200EFD /* OpérationTéléchargementSon.swift */,
+			);
+			name = "Document Carte Son";
+			path = "document-carte-son";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -236,27 +245,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF2D40B227F8A5E200136775 /* OpérationLectureCatalogue.swift in Sources */,
 				CF2D40B527F8A5E200136775 /* AppDelegate-nouvelle-carte-son.swift in Sources */,
 				CF26010E280DA5F6004FCDB1 /* DocumentTransfertPIC-transformer-en-piccolo-data.swift in Sources */,
+				CF68CEA22BFFC5E700200EFD /* OpérationTéléchargementSon.swift in Sources */,
 				CF26010C280D9DE3004FCDB1 /* DocumentTransfertPIC-construire-binpic.swift in Sources */,
 				CF2D40B827F8A5E200136775 /* AppDelegate-conversion-son.swift in Sources */,
 				CF260106280D9CDF004FCDB1 /* ASCII-codes.swift in Sources */,
 				CF76469827FC6762001F3D1A /* EntréeCatalogueSonDuPic.swift in Sources */,
 				CF2D40B627F8A5E200136775 /* DocumentTransfertPIC.swift in Sources */,
 				CF37845C27FC51870059EF42 /* crc.swift in Sources */,
+				CF68CEA12BFFC5E700200EFD /* OpérationLectureCatalogue.swift in Sources */,
 				CF2D40B127F8A5E200136775 /* AppDelegate-logWindow.swift in Sources */,
 				CF260110280DA869004FCDB1 /* DocumentTransfertRP2040-construire-binpic.swift in Sources */,
+				CF68CE9D2BFFC48400200EFD /* DocumentCarteSon.swift in Sources */,
 				CF2D40B327F8A5E200136775 /* AppDelegate-nouveau-son.swift in Sources */,
-				CF2D40B427F8A5E200136775 /* DocumentCarteSon.swift in Sources */,
 				CF2D40AD27F8A5E200136775 /* AppDelegate-nouveau-transfert-pic.swift in Sources */,
 				CF2D409527F8A52000136775 /* AppDelegate.swift in Sources */,
 				CF2D40B727F8A5E200136775 /* DocumentJouerSon10bits.swift in Sources */,
 				CF260104280D76E6004FCDB1 /* AppDelegate-nouveau-transfert-rp2040.swift in Sources */,
 				CF260109280D9D75004FCDB1 /* Data-utilities.swift in Sources */,
-				CF8CA0B027FC787D0043D225 /* OpérationTéléchargementSon.swift in Sources */,
 				CF2600FE280D7503004FCDB1 /* DocumentTransfertRP2040.swift in Sources */,
-				CF8CA0B227FC9E110043D225 /* EntréeCatalogueSonDuDocument.swift in Sources */,
+				CF68CE9E2BFFC48400200EFD /* EntréeCatalogueSonDuDocument.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

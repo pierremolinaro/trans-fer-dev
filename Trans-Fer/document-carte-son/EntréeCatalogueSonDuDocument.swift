@@ -10,7 +10,7 @@ import AppKit
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————
 
-enum DescriptionEntréeCatalogueSonDuDocument {
+enum DescriptionEntréeCatalogueSonDuDocument : Codable {
   case espacement (Int)
   case son (Int, Int, Int, String, UInt32) // Numéro son, numéro secteur, longueur, nom, crc
 }
@@ -31,6 +31,7 @@ enum DescriptionEntréeCatalogueSonDuDocument {
     self.mDescription = .espacement (inNombreSecteurs)
     self.mChaine = (inNombreSecteurs > 1) ? "\(inNombreSecteurs) secteurs libres" : "\(inNombreSecteurs) secteur libre"
     self.mSonValide = false
+    super.init ()
   }
 
   //------------------------------------------------------------------------------------------------
@@ -44,6 +45,7 @@ enum DescriptionEntréeCatalogueSonDuDocument {
     let dernierSecteur = inNuméroSecteurDébut + (inLongueur - 1) / 4096
     self.mChaine = "n°\(inNuméroSon) : secteurs \(inNuméroSecteurDébut)...\(dernierSecteur), \(inLongueur) octets, nom '\(inNom)', CRC \(inCRC.hexString)"
     self.mSonValide = true
+    super.init ()
   }
 
   //------------------------------------------------------------------------------------------------
