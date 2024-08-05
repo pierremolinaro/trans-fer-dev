@@ -8,16 +8,17 @@ import Foundation
 // Version Trans-Fer
 //----------------------------------------------------------------------------------------
 
-let VERSION_TRANS_FER = "1.0.5"
+let VERSION_TRANS_FER = "1.0.6"
 let MAC_OS_MINIMUM_VERSION = "10.15"
 let NOTES : [String] = [
 ]
 let BUGFIXES : [String] = [
 ]
 let CHANGES : [String] = [
-  "Mise à jour pour Sonoma (OSX 14) et Xcode 15.3 beta1"
+  "Document transfertRP2040 : utilisation de arduino-cli"
 ]
 let NEWS : [String] = [
+  "Document transfertRP2040 : paramétrage de la plateforme"
 ]
 
 //----------------------------------------------------------------------------------------
