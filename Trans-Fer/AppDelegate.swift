@@ -12,7 +12,7 @@ import Sparkle
 //——————————————————————————————————————————————————————————————————————————————————————————————————
 
 let PREFS_PICCOLO_APP = "piccoloApplicationPath"
-let PREFS_ARDUINO_APP = "arduinoApplicationPath"
+let PREFS_ARDUINO_CLI_TOOL = "arduinoCliTool"
 let PREFS_ADRESSE_IP_CARTE_MEZZANINE = "adresseIPCarteMezzanine"
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
@@ -48,8 +48,8 @@ fileprivate let SU_LAST_CHECK_TIME = "SULastCheckTime"
     if UserDefaults.standard.string (forKey: PREFS_PICCOLO_APP) == nil {
       UserDefaults.standard.set ("/Applications/CocoaPiccolo.app", forKey: PREFS_PICCOLO_APP)
     }
-    if UserDefaults.standard.string (forKey: PREFS_ARDUINO_APP) == nil {
-      UserDefaults.standard.set ("/Applications/Arduino.app", forKey: PREFS_ARDUINO_APP)
+    if UserDefaults.standard.string (forKey: PREFS_ARDUINO_CLI_TOOL) == nil {
+      UserDefaults.standard.set ("/opt/homebrew/bin/arduino-cli", forKey: PREFS_ARDUINO_CLI_TOOL)
     }
     if UserDefaults.standard.string (forKey: PREFS_ADRESSE_IP_CARTE_MEZZANINE) == nil {
       UserDefaults.standard.set ("192.168.1.68", forKey: PREFS_ADRESSE_IP_CARTE_MEZZANINE)
@@ -69,7 +69,7 @@ fileprivate let SU_LAST_CHECK_TIME = "SULastCheckTime"
     self.mCocoaArduinoApplicationPathButton?.bind (
       .title,
       to: UserDefaults.standard,
-      withKeyPath: PREFS_ARDUINO_APP,
+      withKeyPath: PREFS_ARDUINO_CLI_TOOL,
       options: nil
     )
     self.mCocoaPiccoloApplicationPathButton?.target = self
@@ -108,7 +108,7 @@ fileprivate let SU_LAST_CHECK_TIME = "SULastCheckTime"
         op.orderOut (nil)
         if response == .OK, let path = op.url?.path {
           // Swift.print ("\(path)")
-          UserDefaults.standard.set (path, forKey: PREFS_ARDUINO_APP)
+          UserDefaults.standard.set (path, forKey: PREFS_ARDUINO_CLI_TOOL)
         }
       }
     }

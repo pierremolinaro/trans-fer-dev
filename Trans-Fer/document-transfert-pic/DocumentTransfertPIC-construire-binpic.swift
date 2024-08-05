@@ -19,7 +19,7 @@ extension DocumentTransfertPIC {
   func construireFichierBinaireDistribution (_ SOURCE_PICCOLO_UPDATER : String,
                                              _ PICS_CIBLE : [UInt8],
                                              _ NOM_PIC_FIRMWARE : String) -> Int {
-    appendCommandString ("Construire le fichier binaire de la distribution\n")
+    appendCommandString ("③ Construire le fichier binaire de la distribution\n")
     var s = "PICs cibles :"
     for v in PICS_CIBLE {
       s += " \(v)"

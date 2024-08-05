@@ -63,7 +63,7 @@ extension AppDelegate {
     }
   }
 
-  //····················································································································
+  //································································································
 
   func appendAttributedString (_ inAttributedString : NSAttributedString) {
     if let ts = self.mLogTextView?.layoutManager?.textStorage {
@@ -73,59 +73,59 @@ extension AppDelegate {
     }
   }
 
-  //····················································································································
+  //································································································
 
   func appendMessageString (_ inString : String) {
-    let attributes : [NSAttributedString.Key : NSObject] = [
-      NSAttributedString.Key.font : NSFont.boldSystemFont (ofSize: NSFont.smallSystemFontSize),
-      NSAttributedString.Key.foregroundColor : NSColor.black
-    ]
-    let str = NSAttributedString (string:inString, attributes:attributes)
-    self.appendAttributedString (str)
-  }
-
-  //····················································································································
-
-  func appendMessageString (_ inString : String, color : NSColor) {
-    let attributes : [NSAttributedString.Key : NSObject] = [
-      NSAttributedString.Key.font : NSFont.boldSystemFont (ofSize: NSFont.smallSystemFontSize),
-      NSAttributedString.Key.foregroundColor : color
-    ]
-    let str = NSAttributedString (string:inString, attributes: attributes)
-    self.appendAttributedString (str)
-  }
-
-  //····················································································································
-
-  func appendCodeString (_ inString : String, color : NSColor) {
-    let font = NSFont.userFixedPitchFont (ofSize: NSFont.smallSystemFontSize) ?? NSFont.boldSystemFont (ofSize: NSFont.smallSystemFontSize)
-    let attributes : [NSAttributedString.Key : NSObject] = [
-      NSAttributedString.Key.font : font,
-      NSAttributedString.Key.foregroundColor : color
+    let attributes : [NSAttributedString.Key : Any] = [
+      .font : NSFont.boldSystemFont (ofSize: NSFont.systemFontSize),
+      .foregroundColor : NSColor.black
     ]
     let str = NSAttributedString (string: inString, attributes: attributes)
     self.appendAttributedString (str)
   }
 
-  //····················································································································
+  //································································································
+
+  func appendMessageString (_ inString : String, color inColor : NSColor) {
+    let attributes : [NSAttributedString.Key : Any] = [
+      .font : NSFont.boldSystemFont (ofSize: NSFont.systemFontSize),
+      .foregroundColor : inColor
+    ]
+    let str = NSAttributedString (string: inString, attributes: attributes)
+    self.appendAttributedString (str)
+  }
+
+  //································································································
+
+  func appendCodeString (_ inString : String, color inColor : NSColor) {
+    let font = NSFont.userFixedPitchFont (ofSize: NSFont.systemFontSize) ?? NSFont.boldSystemFont (ofSize: NSFont.systemFontSize)
+    let attributes : [NSAttributedString.Key : Any] = [
+      .font : font,
+      .foregroundColor : inColor
+    ]
+    let str = NSAttributedString (string: inString, attributes: attributes)
+    self.appendAttributedString (str)
+  }
+
+  //································································································
 
   func appendCommandString (_ inString : String) {
     self.appendMessageString (inString, color: .systemBlue)
   }
 
-  //····················································································································
+  //································································································
 
   func appendErrorString (_ inString : String) {
     self.appendMessageString (inString, color: .systemRed)
   }
 
-  //····················································································································
+  //································································································
 
   func appendWarningString (_ inString : String) {
     self.appendMessageString (inString, color: .systemOrange)
   }
 
-  //····················································································································
+  //································································································
 
   func appendSuccessString (_ inString : String) {
     self.appendMessageString (inString, color: .systemGreen)

@@ -18,7 +18,7 @@ extension DocumentTransfertRP2040 {
 
   func construireFichierBinaireDistribution (_ inRP2040Array : [UInt8],
                                              _ inNomFirmware : String) -> Int {
-    appendCommandString ("Construire le fichier binaire de la distribution\n")
+    appendCommandString ("③ Construire le fichier binaire de la distribution\n")
     var s = "RP2040 cibles :"
     for v in inRP2040Array {
       s += " \(v)"
@@ -69,12 +69,6 @@ extension DocumentTransfertRP2040 {
     contents.append (UInt8 ((crc >> 16) & 0xFF))
     contents.append (UInt8 ((crc >>  8) & 0xFF))
     contents.append (UInt8 ((crc >>  0) & 0xFF))
-//    let crcBinData = crc
-//    accumulateByteWithLookUpTable (byte: UInt8 ((crcBinData >> 24) & 0xFF), crc: &crc)
-//    accumulateByteWithLookUpTable (byte: UInt8 ((crcBinData >> 16) & 0xFF), crc: &crc)
-//    accumulateByteWithLookUpTable (byte: UInt8 ((crcBinData >>  8) & 0xFF), crc: &crc)
-//    accumulateByteWithLookUpTable (byte: UInt8 ((crcBinData >>  0) & 0xFF), crc: &crc)
-//    appendMessageString ("CRC: 0x" + String (crc, radix: 16, uppercase: true) + "\n")
   //--- Calculer le CRC
     crc = UInt32.max
     for byte in contents {

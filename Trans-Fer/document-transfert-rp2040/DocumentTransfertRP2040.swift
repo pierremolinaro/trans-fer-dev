@@ -11,6 +11,7 @@ import AppKit
 //——————————————————————————————————————————————————————————————————————————————————————————————————
 
 fileprivate let ARDUINO_BUILD_DIR = "arduino-build"
+fileprivate let DEFAULT_PLATFORM = "rp2040:rp2040:rpipico:flash=2097152_0,freq=125,opt=Small,rtti=Disabled,dbgport=Disabled,dbglvl=None,usbstack=picosdk"
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————
 
@@ -21,6 +22,7 @@ fileprivate let ARDUINO_BUILD_DIR = "arduino-build"
   @IBOutlet var mNomDossierCroquisTextField : NSTextField? = nil
   @IBOutlet var mSignatureTextField : NSTextField? = nil
   @IBOutlet var mAdressesTextField : NSTextField? = nil
+  @IBOutlet var mPlatformTextField : NSTextField? = nil
 
   @IBOutlet var mCommandeCompilationButton : NSButton? = nil
   @IBOutlet var mImageSuccessCompilation : NSImageView? = nil
@@ -45,6 +47,18 @@ fileprivate let ARDUINO_BUILD_DIR = "arduino-build"
     super.init ()
   }
   
+  //································································································
+
+  @objc private dynamic var mChainePlatforme : String = DEFAULT_PLATFORM {
+    didSet {
+      self.undoManager?.registerUndo (withTarget: self) {
+        $0.willChangeValue (forKey: "mChainePlatforme")
+        $0.mChainePlatforme = oldValue
+        $0.didChangeValue (forKey: "mChainePlatforme")
+      }
+    }
+  }
+
   //································································································
 
   @objc private dynamic var mNomDossierCroquis : String = "" {
@@ -97,6 +111,7 @@ fileprivate let ARDUINO_BUILD_DIR = "arduino-build"
     var s = self.mNomDossierCroquis + "\n"
     s += self.mSignature + "\n"
     s += self.mAdressesCAN + "\n"
+    s += self.mChainePlatforme
     let data = s.data (using: .utf8)!
     return data
   }
@@ -111,6 +126,9 @@ fileprivate let ARDUINO_BUILD_DIR = "arduino-build"
         self.mNomDossierCroquis = components [0]
         self.mSignature = components [1]
         self.mAdressesCAN = components [2]
+        if components.count > 3, !components [3].isEmpty {
+          self.mChainePlatforme = components [3]
+        }
       self.undoManager?.enableUndoRegistration ()
     }
   }
@@ -118,6 +136,12 @@ fileprivate let ARDUINO_BUILD_DIR = "arduino-build"
   //································································································
 
   override func windowControllerDidLoadNib (_ windowController : NSWindowController) {
+    self.mPlatformTextField?.bind (
+      .value,
+      to: self,
+      withKeyPath: "mChainePlatforme",
+      options: [NSBindingOption.continuouslyUpdatesValue : true]
+    )
     self.mNomDossierCroquisTextField?.bind (
       .value,
       to: self,
@@ -219,10 +243,10 @@ fileprivate let ARDUINO_BUILD_DIR = "arduino-build"
 
   //································································································
 
-  func runCommand (_ cmd : String, _ args : [String]) -> Int32 {
+  func runCommand (prefix inPrefix : String, _ inCommand : String, _ inArgs : [String]) -> Int32 {
   //--- Command String
-    var str = cmd
-    for s in args {
+    var str = inPrefix + " " + inCommand
+    for s in inArgs {
       str += " " + s
     }
     str += "\n"
@@ -230,8 +254,8 @@ fileprivate let ARDUINO_BUILD_DIR = "arduino-build"
     if let documentDir = self.fileURL?.deletingLastPathComponent ().path {
     //--- Run Command
       let task = Process ()
-      task.launchPath = cmd
-      task.arguments = args
+      task.launchPath = inCommand
+      task.arguments = inArgs
       task.currentDirectoryPath = documentDir
       let pipe = Pipe ()
       task.standardOutput = pipe
@@ -280,50 +304,19 @@ fileprivate let ARDUINO_BUILD_DIR = "arduino-build"
   //································································································
 
   private func commandeCompilationCroquisArduino () -> (String, [String]) {
-    let ARDUINO_APP = UserDefaults.standard.string (forKey: PREFS_ARDUINO_APP) ?? "?"
-    let PLATFORM = "rp2040:rp2040:rpipico:flash=2097152_0,freq=125,opt=Small,rtti=Disabled,dbgport=Disabled,dbglvl=None,usbstack=picosdk"
-    var commande = ARDUINO_APP + "/Contents/Java/arduino-builder"
+    let commandeArduinoCli = UserDefaults.standard.string (forKey: PREFS_ARDUINO_CLI_TOOL) ?? "?"
+//    let PLATFORM = "rp2040:rp2040:rpipico:flash=2097152_0,freq=125,opt=Small,rtti=Disabled,dbgport=Disabled,dbglvl=None,usbstack=picosdk"
     let documentDir = self.fileURL?.deletingLastPathComponent ().path ?? "?"
-    var arguments = [String] ()
     let BUILD_PATH = documentDir + "/" + ARDUINO_BUILD_DIR
-    let fm = FileManager ()
-    if fm.fileExists (atPath: commande) { // Arduino 1.x
-      if !fm.fileExists (atPath: BUILD_PATH) {
-        try? fm.createDirectory (at: URL (fileURLWithPath: BUILD_PATH), withIntermediateDirectories: false, attributes: nil)
-      }
-      arguments.append ("-quiet")
-      arguments.append ("-compile")
-      arguments.append ("-logger=machine")
-      arguments.append ("-hardware")
-      arguments.append (ARDUINO_APP + "/Contents/Java/hardware")
-      arguments.append ("-hardware")
-      arguments.append (NSHomeDirectory () + "/Library/Arduino15/packages")
-      arguments.append ("-tools")
-      arguments.append (ARDUINO_APP + "/Contents/Java/tools-builder")
-      arguments.append ("-tools")
-      arguments.append (ARDUINO_APP + "/Contents/Java/hardware/tools/avr")
-      arguments.append ("-tools")
-      arguments.append (NSHomeDirectory () + "/Library/Arduino15/packages")
-      arguments.append ("-built-in-libraries")
-      arguments.append (ARDUINO_APP + "/Contents/Java/libraries")
-      arguments.append ("-libraries")
-      arguments.append (NSHomeDirectory () + "/Documents/Arduino/libraries")
-      arguments.append ("-fqbn=" + PLATFORM)
-      arguments.append ("-build-path")
-      arguments.append (BUILD_PATH)
-      arguments.append ("-warnings=all")
-      arguments.append (documentDir + "/" + self.mNomDossierCroquis + "/" + self.mNomDossierCroquis + ".ino")
-    }else{ // Arduino 2.x
-      arguments.append ("compile")
-      arguments.append ("-b=" + PLATFORM)
-      arguments.append ("--build-path")
-      arguments.append (BUILD_PATH)
-      arguments.append ("--no-color")
-      arguments.append ("--warnings=all")
-      arguments.append (documentDir + "/" + self.mNomDossierCroquis)
-      commande = ARDUINO_APP + "/Contents/Resources/app/node_modules/arduino-ide-extension/build/arduino-cli" // Arduino 2.x
-    }
-    return (commande, arguments)
+    var arguments = [String] ()
+    arguments.append ("compile")
+    arguments.append ("-b=" + self.mChainePlatforme)
+    arguments.append ("--build-path")
+    arguments.append (BUILD_PATH)
+    arguments.append ("--no-color")
+    arguments.append ("--warnings=all")
+    arguments.append (documentDir + "/" + self.mNomDossierCroquis)
+    return (commandeArduinoCli, arguments)
   }
 
   //································································································
@@ -336,7 +329,6 @@ fileprivate let ARDUINO_BUILD_DIR = "arduino-build"
     arguments.append ("-O")
     arguments.append ("-L")
     arguments.append ("--no-color")
-//    arguments.append (self.mNomUpdater + ".piccolo")
     return (commande, arguments)
   }
 
@@ -345,7 +337,7 @@ fileprivate let ARDUINO_BUILD_DIR = "arduino-build"
   fileprivate func compilerCroquisArduino (_ ioSuccess : inout Bool) {
     self.mImageSuccessCompilation?.image = NSImage (named: "NSSmartBadgeTemplate")
     let (command, arguments) = self.commandeCompilationCroquisArduino ()
-    let result = self.runCommand (command, arguments)
+    let result = self.runCommand (prefix: "① ", command, arguments)
     if result == 0 {
       appendSuccessString ("Succès\n")
       self.mImageSuccessCompilation?.image = NSImage (named: "NSStatusAvailable")
@@ -388,7 +380,7 @@ fileprivate let ARDUINO_BUILD_DIR = "arduino-build"
   fileprivate func transformerElfEnBin (_ ioSuccess : inout Bool) {
     self.mImageSuccessTransformationElfEnBin?.image = NSImage (named: "NSSmartBadgeTemplate")
     let (command, arguments) = self.commandTransformerElfEnBin ()
-    let result = self.runCommand (command, arguments)
+    let result = self.runCommand (prefix: "② ", command, arguments)
     if result == 0 {
       appendSuccessString ("Succès\n")
       self.mImageSuccessTransformationElfEnBin?.image = NSImage (named: "NSStatusAvailable")

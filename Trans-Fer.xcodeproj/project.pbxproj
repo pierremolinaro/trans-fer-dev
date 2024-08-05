@@ -93,6 +93,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CF159F0F2C3DCDDC003FB999 /* Document Jouer Son 10 bits */ = {
+			isa = PBXGroup;
+			children = (
+				CF2D40A727F8A5E200136775 /* AppDelegate-nouveau-son.swift */,
+				CF2D40A927F8A5E200136775 /* AppDelegate-nouvelle-carte-son.swift */,
+				CF2D40AB27F8A5E200136775 /* DocumentJouerSon10bits.swift */,
+				CF2D40D427F8A81000136775 /* DocumentJouerSon10bits.xib */,
+			);
+			name = "Document Jouer Son 10 bits";
+			path = "Document-jouer-son-10 bits";
+			sourceTree = "<group>";
+		};
+		CF159F102C3DCE56003FB999 /* document-transfert-pic */ = {
+			isa = PBXGroup;
+			children = (
+				CF2D40A127F8A5E200136775 /* AppDelegate-nouveau-transfert-pic.swift */,
+				CF26010B280D9DE3004FCDB1 /* DocumentTransfertPIC-construire-binpic.swift */,
+				CF26010D280DA5F6004FCDB1 /* DocumentTransfertPIC-transformer-en-piccolo-data.swift */,
+				CF2D40AA27F8A5E200136775 /* DocumentTransfertPIC.swift */,
+				CF2D40D827F8A81000136775 /* DocumentTransfertPIC.xib */,
+			);
+			path = "document-transfert-pic";
+			sourceTree = "<group>";
+		};
+		CF159F112C3DCEB8003FB999 /* document-transfert-rp2040 */ = {
+			isa = PBXGroup;
+			children = (
+				CF260103280D76E6004FCDB1 /* AppDelegate-nouveau-transfert-rp2040.swift */,
+				CF26010F280DA869004FCDB1 /* DocumentTransfertRP2040-construire-binpic.swift */,
+				CF2600FC280D7502004FCDB1 /* DocumentTransfertRP2040.swift */,
+				CF260100280D7511004FCDB1 /* DocumentTransfertRP2040.xib */,
+			);
+			path = "document-transfert-rp2040";
+			sourceTree = "<group>";
+		};
 		CF2D408827F8A52000136775 = {
 			isa = PBXGroup;
 			children = (
@@ -113,13 +148,12 @@
 		CF2D409327F8A52000136775 /* Trans-Fer */ = {
 			isa = PBXGroup;
 			children = (
+				CF159F112C3DCEB8003FB999 /* document-transfert-rp2040 */,
+				CF159F102C3DCE56003FB999 /* document-transfert-pic */,
+				CF159F0F2C3DCDDC003FB999 /* Document Jouer Son 10 bits */,
 				CF68CE9A2BFFC45500200EFD /* Document Carte Son */,
 				CF2D40AC27F8A5E200136775 /* AppDelegate-conversion-son.swift */,
 				CF2D40A527F8A5E200136775 /* AppDelegate-logWindow.swift */,
-				CF2D40A727F8A5E200136775 /* AppDelegate-nouveau-son.swift */,
-				CF2D40A127F8A5E200136775 /* AppDelegate-nouveau-transfert-pic.swift */,
-				CF260103280D76E6004FCDB1 /* AppDelegate-nouveau-transfert-rp2040.swift */,
-				CF2D40A927F8A5E200136775 /* AppDelegate-nouvelle-carte-son.swift */,
 				CF2D409427F8A52000136775 /* AppDelegate.swift */,
 				CF260105280D9CDF004FCDB1 /* ASCII-codes.swift */,
 				CF2D409627F8A52200136775 /* Assets.xcassets */,
@@ -127,17 +161,6 @@
 				CF37845B27FC51870059EF42 /* crc.swift */,
 				CFAD4217293CBB6100D4C6E9 /* Credits.rtf */,
 				CF260108280D9D75004FCDB1 /* Data-utilities.swift */,
-				CF2D40D627F8A81000136775 /* DocumentCarteSon.xib */,
-				CF2D40AB27F8A5E200136775 /* DocumentJouerSon10bits.swift */,
-				CF2D40D427F8A81000136775 /* DocumentJouerSon10bits.xib */,
-				CF26010B280D9DE3004FCDB1 /* DocumentTransfertPIC-construire-binpic.swift */,
-				CF26010D280DA5F6004FCDB1 /* DocumentTransfertPIC-transformer-en-piccolo-data.swift */,
-				CF2D40AA27F8A5E200136775 /* DocumentTransfertPIC.swift */,
-				CF2D40D827F8A81000136775 /* DocumentTransfertPIC.xib */,
-				CF26010F280DA869004FCDB1 /* DocumentTransfertRP2040-construire-binpic.swift */,
-				CF2600FC280D7502004FCDB1 /* DocumentTransfertRP2040.swift */,
-				CF260100280D7511004FCDB1 /* DocumentTransfertRP2040.xib */,
-				CF76469727FC6762001F3D1A /* EntréeCatalogueSonDuPic.swift */,
 				CF2D40D327F8A69A00136775 /* Info.plist */,
 				CF2D409827F8A52200136775 /* MainMenu.xib */,
 				CF2D40A427F8A5E200136775 /* son10bits.icns */,
@@ -152,7 +175,9 @@
 			isa = PBXGroup;
 			children = (
 				CF68CE9B2BFFC48400200EFD /* DocumentCarteSon.swift */,
+				CF2D40D627F8A81000136775 /* DocumentCarteSon.xib */,
 				CF68CE9C2BFFC48400200EFD /* EntréeCatalogueSonDuDocument.swift */,
+				CF76469727FC6762001F3D1A /* EntréeCatalogueSonDuPic.swift */,
 				CF68CE9F2BFFC5E700200EFD /* OpérationLectureCatalogue.swift */,
 				CF68CEA02BFFC5E700200EFD /* OpérationTéléchargementSon.swift */,
 			);
