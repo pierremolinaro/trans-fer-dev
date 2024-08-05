@@ -17,7 +17,7 @@
             <connections>
                 <outlet property="mAdresseIPCarteMezzanineTextField" destination="O5g-Ru-0gs" id="di3-IM-AZJ"/>
                 <outlet property="mAutomaticallyCheckForUpdateCheckBox" destination="kgK-Bg-9hH" id="V9w-mX-PEP"/>
-                <outlet property="mCocoaArduinoApplicationPathButton" destination="SRW-TF-but" id="kD7-rj-Mbp"/>
+                <outlet property="mCocoaArduinoApplicationPathTextField" destination="Ol7-aF-pLi" id="sWo-2L-7FQ"/>
                 <outlet property="mCocoaPiccoloApplicationPathButton" destination="Psx-ZJ-OKe" id="4YF-x5-yqC"/>
                 <outlet property="mLogTextView" destination="WVP-8t-k7E" id="KtE-On-0T2"/>
                 <outlet property="mLogWindow" destination="Ra5-Ll-swb" id="TSk-6q-Vn0"/>
@@ -764,7 +764,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="1106" width="600" height="346"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1496" height="933"/>
+            <rect key="screenRect" x="0.0" y="967" width="1920" height="1055"/>
             <value key="minSize" type="size" width="600" height="346"/>
             <value key="maxSize" type="size" width="600" height="346"/>
             <view key="contentView" id="13m-Bn-ThR">
@@ -788,14 +788,6 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <button verticalHuggingPriority="750" id="SRW-TF-but">
-                        <rect key="frame" x="10" y="191" width="572" height="31"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="left" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2f8-fX-u6T">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" size="11" name="Menlo-Regular"/>
-                        </buttonCell>
-                    </button>
                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZfN-U4-s2A">
                         <rect key="frame" x="14" y="226" width="568" height="16"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -896,9 +888,18 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ol7-aF-pLi">
+                        <rect key="frame" x="16" y="194" width="564" height="21"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="EUO-Gn-iZw">
+                            <font key="font" usesAppearanceFont="YES"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="151.5" y="98"/>
+            <point key="canvasLocation" x="151" y="98"/>
         </window>
     </objects>
 </document>

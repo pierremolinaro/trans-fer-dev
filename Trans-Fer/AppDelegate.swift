@@ -30,7 +30,7 @@ fileprivate let SU_LAST_CHECK_TIME = "SULastCheckTime"
   //································································································
 
   @IBOutlet var mCocoaPiccoloApplicationPathButton : NSButton? = nil
-  @IBOutlet var mCocoaArduinoApplicationPathButton : NSButton? = nil
+  @IBOutlet var mCocoaArduinoApplicationPathTextField : NSTextField? = nil
   @IBOutlet var mAdresseIPCarteMezzanineTextField : NSTextField? = nil
   @IBOutlet var mLogWindow : NSWindow? = nil
   @IBOutlet var mLogTextView : NSTextView? = nil
@@ -66,16 +66,14 @@ fileprivate let SU_LAST_CHECK_TIME = "SULastCheckTime"
       withKeyPath: PREFS_PICCOLO_APP,
       options: nil
     )
-    self.mCocoaArduinoApplicationPathButton?.bind (
-      .title,
+    self.mCocoaArduinoApplicationPathTextField?.bind (
+      .value,
       to: UserDefaults.standard,
       withKeyPath: PREFS_ARDUINO_CLI_TOOL,
       options: nil
     )
     self.mCocoaPiccoloApplicationPathButton?.target = self
     self.mCocoaPiccoloApplicationPathButton?.action = #selector (Self.selectPiccoloApplication (_:))
-    self.mCocoaArduinoApplicationPathButton?.target = self
-    self.mCocoaArduinoApplicationPathButton?.action = #selector (Self.selectArduinoApplication (_:))
   }
 
   //································································································
@@ -83,32 +81,21 @@ fileprivate let SU_LAST_CHECK_TIME = "SULastCheckTime"
   @objc func selectPiccoloApplication (_ inSender : NSButton) {
     if let window = inSender.window {
       let op = NSOpenPanel ()
-      op.allowsMultipleSelection = false
-      op.canChooseDirectories = true
-      op.canChooseFiles = true
-      op.beginSheetModal (for: window) { (_ response : NSApplication.ModalResponse) in
-        op.orderOut (nil)
-        if response == .OK, let path = op.url?.path {
-          // Swift.print ("\(path)")
-          UserDefaults.standard.set (path, forKey: PREFS_PICCOLO_APP)
+      if let path = UserDefaults.standard.string (forKey: PREFS_PICCOLO_APP) {
+        let directoryURL = URL (fileURLWithPath: path).deletingLastPathComponent ()
+        if directoryURL.hasDirectoryPath {
+          op.directoryURL = directoryURL
         }
       }
-    }
-  }
-
-  //································································································
-
-  @objc func selectArduinoApplication (_ inSender : NSButton) {
-    if let window = inSender.window {
-      let op = NSOpenPanel ()
+      op.isExtensionHidden = false
+      op.allowedFileTypes = ["app"]
       op.allowsMultipleSelection = false
-      op.canChooseDirectories = true
+      op.canChooseDirectories = false
       op.canChooseFiles = true
       op.beginSheetModal (for: window) { (_ response : NSApplication.ModalResponse) in
         op.orderOut (nil)
         if response == .OK, let path = op.url?.path {
-          // Swift.print ("\(path)")
-          UserDefaults.standard.set (path, forKey: PREFS_ARDUINO_CLI_TOOL)
+          UserDefaults.standard.set (path, forKey: PREFS_PICCOLO_APP)
         }
       }
     }
