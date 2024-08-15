@@ -16,11 +16,11 @@ extension DocumentTransfertRP2040 {
   //   construireFichierBinaireDistribution
   //------------------------------------------------------------------------------------------------
 
-  func construireFichierBinaireDistribution (_ inRP2040Array : [UInt8],
+  func construireFichierBinaireDistribution (_ inTableauDesAdressesCAN : [UInt8],
                                              _ inNomFirmware : String) -> Int {
     appendCommandString ("③ Construire le fichier binaire de la distribution\n")
     var s = "RP2040 cibles :"
-    for v in inRP2040Array {
+    for v in inTableauDesAdressesCAN {
       s += " \(v)"
     }
     appendMessageString (s + "\n")
@@ -32,8 +32,8 @@ extension DocumentTransfertRP2040 {
   //--- Écrire l'adresse de base (zéro pour un binaire RP2040)
     contents.append (0)
     contents.append (0)
-  //--- Écrire la description des adresses des PICs destinataires
-    var adressesOrdonnées = inRP2040Array.sorted ()
+  //--- Écrire la description des adresses des RP2040 destinataires
+    var adressesOrdonnées = inTableauDesAdressesCAN.sorted ()
     appendMessageString ("Adresses des RP2040 destinataires : \(adressesOrdonnées)\n")
     var adresseCourante = adressesOrdonnées.remove (at: 0)
     var nombreAdressesConsécutives : UInt8 = 1

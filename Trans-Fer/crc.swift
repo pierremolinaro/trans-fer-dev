@@ -11,8 +11,8 @@ import Foundation
 //——————————————————————————————————————————————————————————————————————————————————————————————————
 // POLYNOME_PLUS1IMPLICITE : 0xC9D204F5 // Assure HD=4 jusqu'à 2147483615 bits
 // https://en.wikipedia.org/wiki/Cyclic_redundancy_check
-// CRC-32 : x^32 + x^26 + x^23 + x^22 + x^16 + x^12 + x^11 + x^10 + x^8 + x^7 + x^5 + x^4 + x^2 + x + 1
-// En notation normale : 0x82608EDB
+// CRC-32 : x^32 + x^31 + x^28 + x^25 + x^24 + x^23 + x^21 + x^18 + x^11 + x^8 + x^7 + x^6 + x^5 + x^3 + x + 1
+// En notation normale : 0x93A409EB
 // http://www.sunshine2k.de/coding/javascript/crc/crc_js.html
 //——————————————————————————————————————————————————————————————————————————————————————————————————
 
