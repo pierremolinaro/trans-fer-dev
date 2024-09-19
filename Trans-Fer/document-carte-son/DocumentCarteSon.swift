@@ -158,13 +158,13 @@ protocol ProtocoleOpérationCarteSon : AnyObject {
 
   private var mConnection : NWConnection? = nil
   private var mReceivedData = [UInt8] ()
-  private var mOpération : ProtocoleOpérationCarteSon? = nil
+  private var mOpération : (any ProtocoleOpérationCarteSon)? = nil
   private var mTramesÀEnvoyer = [Trame] ()
   private var mFenêtreEnvoi = 0
   private var mTramesEnvoyées = 0
   private var mTramesReçues = 0
   private var mDateDébutOpération = Date ()
-  private var mOpérationAchevée : Optional < (_ inOpération : ProtocoleOpérationCarteSon) -> Void > = nil
+  private var mOpérationAchevée : Optional < (_ inOpération : any ProtocoleOpérationCarteSon) -> Void > = nil
 
   //································································································
   //  Catalogue des sons
@@ -422,9 +422,9 @@ protocol ProtocoleOpérationCarteSon : AnyObject {
 
   //································································································
 
-  private func lancerOpération (opération inOperation : ProtocoleOpérationCarteSon,
+  private func lancerOpération (opération inOperation : any ProtocoleOpérationCarteSon,
                                 titre inTitre : String,
-                                après inHandler : @escaping (ProtocoleOpérationCarteSon) -> Void) {
+                                après inHandler : @escaping (any ProtocoleOpérationCarteSon) -> Void) {
     if let adresseIPcarteMezzanine = UserDefaults.standard.string (forKey: PREFS_ADRESSE_IP_CARTE_MEZZANINE),
        let panel = self.mPanelOperation {
       self.mOpérationAchevée = inHandler
@@ -477,7 +477,7 @@ protocol ProtocoleOpérationCarteSon : AnyObject {
 
   //································································································
 
-  fileprivate func aprèsRécupérationCatalogueEnEEPROM (_ inOpération : ProtocoleOpérationCarteSon) {
+  fileprivate func aprèsRécupérationCatalogueEnEEPROM (_ inOpération : any ProtocoleOpérationCarteSon) {
     if let opération = inOpération as? OpérationLectureCatalogue {
       var catalogue = [EntréeCatalogueSonDuPic] ()
       var n = 0
@@ -527,7 +527,7 @@ protocol ProtocoleOpérationCarteSon : AnyObject {
 
   //································································································
 
-  fileprivate func aprèsTéléchargementSon (_ inOpération : ProtocoleOpérationCarteSon) {
+  fileprivate func aprèsTéléchargementSon (_ inOpération : any ProtocoleOpérationCarteSon) {
     if let opération = inOpération as? OpérationTéléchargementSon {
       let son10bits = opération.donnéesSon ()
       let dc = NSDocumentController.shared

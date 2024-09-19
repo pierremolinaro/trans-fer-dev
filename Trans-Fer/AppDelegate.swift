@@ -125,37 +125,38 @@ fileprivate let SU_LAST_CHECK_TIME = "SULastCheckTime"
   override func awakeFromNib () {
 //    self.mCheckNowForUpdateMenuItem?.target = self
 //    self.mCheckNowForUpdateMenuItem?.action = #selector (Self.checkForUpdatesAction (_:))
-    self.mUsingSparkleTextField?.stringValue = "Avec Sparkle " + self.sparkleVersionString ()
-    self.mAutomaticallyCheckForUpdateCheckBox?.bind (
-      NSBindingName.value,
-      to: self.mUpdaterController.updater,
-      withKeyPath: "automaticallyChecksForUpdates",
-      options: nil
-    )
-    self.mUpdateCheckIntervalPopUpButton?.bind (
-      NSBindingName.selectedTag,
-      to: self.mUpdaterController.updater,
-      withKeyPath: "updateCheckInterval",
-      options: nil
-    )
-    self.mUpdateCheckIntervalPopUpButton?.bind (
-      NSBindingName.enabled,
-      to: self.mUpdaterController.updater,
-      withKeyPath: "automaticallyChecksForUpdates",
-      options: nil
-    )
-    let formatter = DateFormatter ()
-    formatter.dateStyle = .long
-    formatter.timeStyle = .short
-    formatter.locale = Locale (identifier: "fr_FR")
-    self.mSparkleLastCheckTimeTextField?.formatter = formatter
-    self.mSparkleLastCheckTimeTextField?.bind (
-      NSBindingName.value,
-      to: UserDefaults.standard,
-      withKeyPath: SU_LAST_CHECK_TIME,
-      options: nil
-    )
-
+    DispatchQueue.main.async {
+      self.mUsingSparkleTextField?.stringValue = "Avec Sparkle " + self.sparkleVersionString ()
+      self.mAutomaticallyCheckForUpdateCheckBox?.bind (
+        NSBindingName.value,
+        to: self.mUpdaterController.updater,
+        withKeyPath: "automaticallyChecksForUpdates",
+        options: nil
+      )
+      self.mUpdateCheckIntervalPopUpButton?.bind (
+        NSBindingName.selectedTag,
+        to: self.mUpdaterController.updater,
+        withKeyPath: "updateCheckInterval",
+        options: nil
+      )
+      self.mUpdateCheckIntervalPopUpButton?.bind (
+        NSBindingName.enabled,
+        to: self.mUpdaterController.updater,
+        withKeyPath: "automaticallyChecksForUpdates",
+        options: nil
+      )
+      let formatter = DateFormatter ()
+      formatter.dateStyle = .long
+      formatter.timeStyle = .short
+      formatter.locale = Locale (identifier: "fr_FR")
+      self.mSparkleLastCheckTimeTextField?.formatter = formatter
+      self.mSparkleLastCheckTimeTextField?.bind (
+        NSBindingName.value,
+        to: UserDefaults.standard,
+        withKeyPath: SU_LAST_CHECK_TIME,
+        options: nil
+      )
+    }
   }
 
   //····················································································································
