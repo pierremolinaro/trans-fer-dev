@@ -179,9 +179,13 @@ protocol ProtocoleOpérationCarteSon : AnyObject {
   //································································································
 
   deinit {
-    DispatchQueue.main.async {
-      self.stop ()
-    }
+//    DispatchQueue.main.async {
+//      self.stop ()
+    self.mConnection?.cancel ()
+    self.mConnection = nil
+    self.mReceivedData.removeAll ()
+    self.mTramesÀEnvoyer.removeAll ()
+//    }
   }
 
   //································································································

@@ -44,15 +44,28 @@ extension UInt32 {
   //································································································
 
   private var mSon10bits = [UInt8] ()
-  private var mPossibleAudioQueue = AudioQueueRef (bitPattern: 0) ;
+//  private var mPossibleAudioQueue = AudioQueueRef (bitPattern: 0)
+  private var mAudioQueue = AudioQueueClass ()
 
   //································································································
 
-  deinit {
-    if let audioQueue = self.mPossibleAudioQueue {
-      AudioQueueDispose (audioQueue, true)
+  final class AudioQueueClass {
+    var mPossibleAudioQueue = AudioQueueRef (bitPattern: 0)
+
+    deinit {
+      if let audioQueue = self.mPossibleAudioQueue {
+        AudioQueueDispose (audioQueue, true)
+      }
     }
   }
+
+  //································································································
+
+//  deinit {
+//    if let audioQueue = self.mPossibleAudioQueue {
+//      AudioQueueDispose (audioQueue, true)
+//    }
+//  }
 
   //································································································
 
@@ -150,7 +163,7 @@ extension UInt32 {
     description.mBytesPerFrame = 1
     description.mChannelsPerFrame = 1
     description.mBitsPerChannel = 8
-    if let audioQueue = self.mPossibleAudioQueue {
+    if let audioQueue = self.mAudioQueue.mPossibleAudioQueue {
       AudioQueueDispose (audioQueue, true)
     }
     var status = AudioQueueNewOutput (&description,
@@ -158,9 +171,9 @@ extension UInt32 {
                                       Unmanaged.passUnretained (self).toOpaque (), // User data, pass self as raw pointer
                                       nil, nil,
                                       0,
-                                      &self.mPossibleAudioQueue)
+                                      &self.mAudioQueue.mPossibleAudioQueue)
     var informativeText = "AudioQueueNewOutput"
-    if status == 0, let audioQueue = self.mPossibleAudioQueue {
+    if status == 0, let audioQueue = self.mAudioQueue.mPossibleAudioQueue {
       var buffer = UnsafeMutablePointer <AudioQueueBuffer> (bitPattern: 0)
       if status == 0 {
         status = AudioQueueAllocateBuffer (audioQueue, UInt32 (data8Bits.count), &buffer)
@@ -220,7 +233,7 @@ extension UInt32 {
     description.mBytesPerPacket = 2
     description.mBytesPerFrame = 2
     description.mFramesPerPacket = 1
-    if let audioQueue = self.mPossibleAudioQueue {
+    if let audioQueue = self.mAudioQueue.mPossibleAudioQueue {
       AudioQueueDispose (audioQueue, true)
     }
     var status = AudioQueueNewOutput (&description,
@@ -228,9 +241,9 @@ extension UInt32 {
                                       Unmanaged.passUnretained (self).toOpaque (), // User data, pass self as raw pointer
                                       nil, nil,
                                       0,
-                                      &self.mPossibleAudioQueue)
+                                      &self.mAudioQueue.mPossibleAudioQueue)
     var informativeText = "AudioQueueNewOutput"
-    if status == 0, let audioQueue = self.mPossibleAudioQueue {
+    if status == 0, let audioQueue = self.mAudioQueue.mPossibleAudioQueue {
       var buffer = UnsafeMutablePointer <AudioQueueBuffer> (bitPattern: 0)
       if status == 0 {
         status = AudioQueueAllocateBuffer (audioQueue, UInt32 (data10Bits.count * 2), &buffer)

@@ -256,10 +256,10 @@ import AppKit
 
   //································································································
 
-  func runCommand (_ cmd : String, _ args : [String]) -> Int32 {
+  func runCommand (_ inCommand : String, _ inArguments : [String]) -> Int32 {
   //--- Command String
-    var str = cmd
-    for s in args {
+    var str = inCommand
+    for s in inArguments {
       str += " " + s
     }
     str += "\n"
@@ -267,8 +267,8 @@ import AppKit
     if let documentDir = self.fileURL?.deletingLastPathComponent ().path {
     //--- Run Command
       let task = Process ()
-      task.launchPath = cmd
-      task.arguments = args
+      task.launchPath = inCommand
+      task.arguments = inArguments
       task.currentDirectoryPath = documentDir
       let pipe = Pipe ()
       task.standardOutput = pipe
@@ -317,7 +317,7 @@ import AppKit
 
   //································································································
 
-  private func commandeCompîlationSourcePiccolo () -> (String, [String]) {
+  private func commandeCompilationSourcePiccolo () -> (String, [String]) {
     let commande = (UserDefaults.standard.string (forKey: PREFS_PICCOLO_APP) ?? "?") + "/Contents/Resources/piccolo"
     var arguments = [String] ()
     arguments.append ("--Werror")
@@ -349,7 +349,7 @@ import AppKit
 
   fileprivate func compilerCodePiccolo (_ ioSuccess : inout Bool) {
     self.mImageSuccessCompilation?.image = NSImage (named: "NSSmartBadgeTemplate")
-    let (command, arguments) = self.commandeCompîlationSourcePiccolo ()
+    let (command, arguments) = self.commandeCompilationSourcePiccolo ()
     let result = self.runCommand (command, arguments)
     if result == 0 {
       appendSuccessString ("Succès\n")
