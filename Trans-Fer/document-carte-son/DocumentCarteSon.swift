@@ -216,11 +216,12 @@ protocol ProtocoleOpérationCarteSon : AnyObject {
 
   //································································································
 
-  override func read (from inData : Data, ofType typeName: String) throws {
-    let decoder = JSONDecoder ()
-    let array = try decoder.decode (DescriptionEntréeCatalogueSonDuDocument.self, from: inData)
-
-
+  nonisolated override func read (from inData : Data, ofType typeName: String) throws {
+//    try DispatchQueue.main.asyncAndWait {
+//    let decoder = JSONDecoder ()
+//    let array = try decoder.decode (DescriptionEntréeCatalogueSonDuDocument.self, from: inData)
+//
+//    }
     let s = String (data: inData, encoding: .utf8)!
     DispatchQueue.main.async {
       var array = s.components (separatedBy: "\n")

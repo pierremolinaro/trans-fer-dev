@@ -118,7 +118,7 @@ fileprivate let DEFAULT_PLATFORM = "rp2040:rp2040:rpipico:flash=2097152_0,freq=1
 
   //································································································
 
-  override func read (from inData : Data, ofType typeName: String) throws {
+  nonisolated override func read (from inData : Data, ofType typeName: String) throws {
     DispatchQueue.main.async {
       self.undoManager?.disableUndoRegistration ()
         let s = String (data: inData, encoding: .utf8)!
@@ -170,7 +170,7 @@ fileprivate let DEFAULT_PLATFORM = "rp2040:rp2040:rpipico:flash=2097152_0,freq=1
   func runCancelableCommand (_ cmd : String,
                              _ args : [String],
                              alertTitle inTitle : String,
-                             _ inCallBack : @escaping (_ inStatus : Int32) -> Void) {
+                             _ inCallBack : @escaping @MainActor (_ inStatus : Int32) -> Void) {
   //--- Command String
     var str = "+ " + cmd
     for s in args {
@@ -206,13 +206,15 @@ fileprivate let DEFAULT_PLATFORM = "rp2040:rp2040:rpipico:flash=2097152_0,freq=1
           name: NSNotification.Name.NSFileHandleDataAvailable,
           object: stdoutHandle
         )
-        self.mAlert = nil
-        if process.isRunning {
-          process.terminate ()
-          inCallBack (1)
-        }else{
-          let status = process.terminationStatus
-          inCallBack (status)
+        DispatchQueue.main.async {
+          self.mAlert = nil
+          if process.isRunning {
+            process.terminate ()
+            inCallBack (1)
+          }else{
+            let status = process.terminationStatus
+            inCallBack (status)
+          }
         }
       }
     //--- Launch command

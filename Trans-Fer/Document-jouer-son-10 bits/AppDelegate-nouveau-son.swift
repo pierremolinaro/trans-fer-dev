@@ -23,8 +23,10 @@ import AudioToolbox
     op.allowedFileTypes = ["wav"]
     op.begin { (inReturnCode : NSApplication.ModalResponse) in
       if inReturnCode == .OK {
-        let url = op.urls [0]
-        DispatchQueue.main.async { self.nouveauDocumentSon10bits (àPartirFichierWAVà15625Hz: url) }
+        DispatchQueue.main.async {
+          let url = op.urls [0]
+          self.nouveauDocumentSon10bits (àPartirFichierWAVà15625Hz: url)
+        }
       }
     }
   }

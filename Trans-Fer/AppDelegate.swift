@@ -93,9 +93,11 @@ fileprivate let SU_LAST_CHECK_TIME = "SULastCheckTime"
       op.canChooseDirectories = false
       op.canChooseFiles = true
       op.beginSheetModal (for: window) { (_ response : NSApplication.ModalResponse) in
-        op.orderOut (nil)
-        if response == .OK, let path = op.url?.path {
-          UserDefaults.standard.set (path, forKey: PREFS_PICCOLO_APP)
+        DispatchQueue.main.async {
+          op.orderOut (nil)
+          if response == .OK, let path = op.url?.path {
+            UserDefaults.standard.set (path, forKey: PREFS_PICCOLO_APP)
+          }
         }
       }
     }
@@ -122,7 +124,7 @@ fileprivate let SU_LAST_CHECK_TIME = "SULastCheckTime"
 
   //····················································································································
 
-  override func awakeFromNib () {
+  nonisolated override func awakeFromNib () {
 //    self.mCheckNowForUpdateMenuItem?.target = self
 //    self.mCheckNowForUpdateMenuItem?.action = #selector (Self.checkForUpdatesAction (_:))
     DispatchQueue.main.async {

@@ -10,7 +10,7 @@ import AppKit
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————
 
-enum DescriptionEntréeCatalogueSonDuDocument : Codable {
+enum DescriptionEntréeCatalogueSonDuDocument : @MainActor Codable {
   case espacement (Int)
   case son (Int, Int, Int, String, UInt32) // Numéro son, numéro secteur, longueur, nom, crc
 }

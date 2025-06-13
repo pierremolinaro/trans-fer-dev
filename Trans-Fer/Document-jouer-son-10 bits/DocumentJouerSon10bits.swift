@@ -53,8 +53,11 @@ extension UInt32 {
     var mPossibleAudioQueue = AudioQueueRef (bitPattern: 0)
 
     deinit {
-      if let audioQueue = self.mPossibleAudioQueue {
-        AudioQueueDispose (audioQueue, true)
+      let me = self
+        DispatchQueue.main.async {
+        if let audioQueue = me.mPossibleAudioQueue {
+          AudioQueueDispose (audioQueue, true)
+        }
       }
     }
   }
@@ -87,7 +90,7 @@ extension UInt32 {
 
   //································································································
 
-  override func read (from inData : Data, ofType typeName: String) throws {
+  nonisolated override func read (from inData : Data, ofType typeName: String) throws {
     DispatchQueue.main.async {
       self.undoManager?.disableUndoRegistration ()
       self.mSon10bits = [UInt8] (inData)

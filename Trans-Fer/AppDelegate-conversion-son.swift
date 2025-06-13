@@ -26,8 +26,10 @@ import AVFoundation
     op.allowedFileTypes = ["wav", "mp3"]
     op.begin { (inReturnCode : NSApplication.ModalResponse) in
       if inReturnCode == .OK {
-        let url = op.urls [0]
-        DispatchQueue.main.async { self.nouveauDocumentSon10bits (àPartirFichierSon: url) }
+        DispatchQueue.main.async {
+          let url = op.urls [0]
+          self.nouveauDocumentSon10bits (àPartirFichierSon: url)
+        }
       }
     }
   }

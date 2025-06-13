@@ -126,7 +126,7 @@ import AppKit
 
   //································································································
 
-  override func read (from inData : Data, ofType typeName: String) throws {
+  nonisolated override func read (from inData : Data, ofType typeName: String) throws {
     DispatchQueue.main.async {
       self.undoManager?.disableUndoRegistration ()
         let s = String (data: inData, encoding: .utf8)!
@@ -183,7 +183,7 @@ import AppKit
   func runCancelableCommand (_ cmd : String,
                              _ args : [String],
                              alertTitle inTitle : String,
-                             _ inCallBack : @escaping (_ inStatus : Int32) -> Void) {
+                             _ inCallBack : @escaping @Sendable (_ inStatus : Int32) -> Void) {
   //--- Command String
     var str = "+ " + cmd
     for s in args {
@@ -219,13 +219,15 @@ import AppKit
           name: NSNotification.Name.NSFileHandleDataAvailable,
           object: stdoutHandle
         )
-        self.mAlert = nil
-        if process.isRunning {
-          process.terminate ()
-          inCallBack (1)
-        }else{
-          let status = process.terminationStatus
-          inCallBack (status)
+        DispatchQueue.main.async {
+          self.mAlert = nil
+          if process.isRunning {
+            process.terminate ()
+            inCallBack (1)
+          }else{
+            let status = process.terminationStatus
+            inCallBack (status)
+          }
         }
       }
     //--- Launch command
@@ -500,12 +502,14 @@ import AppKit
     self.mImageSuccessTransfererEnFTP?.image = NSImage (named: "NSSmartBadgeTemplate")
     let (command, arguments) = self.commandeTransférerParFTP ()
     self.runCancelableCommand (command, arguments, alertTitle: "Transfert par FTP") { (_ result : Int32) in
-      if result == 0 {
-        appendSuccessString ("Succès\n")
-        self.mImageSuccessTransfererEnFTP?.image = NSImage (named: "NSStatusAvailable")
-      }else{
-        appendErrorString ("Échec (erreur \(result))\n")
-        self.mImageSuccessTransfererEnFTP?.image = NSImage (named: "NSStatusUnavailable")
+      DispatchQueue.main.async {
+        if result == 0 {
+          appendSuccessString ("Succès\n")
+          self.mImageSuccessTransfererEnFTP?.image = NSImage (named: "NSStatusAvailable")
+        }else{
+          appendErrorString ("Échec (erreur \(result))\n")
+          self.mImageSuccessTransfererEnFTP?.image = NSImage (named: "NSStatusUnavailable")
+        }
       }
     }
   }
