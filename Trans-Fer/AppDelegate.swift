@@ -116,7 +116,6 @@ fileprivate let SU_LAST_CHECK_TIME = "SULastCheckTime"
   //····················································································································
 
   fileprivate let mUpdaterController = Sparkle.SPUStandardUpdaterController (updaterDelegate: nil, userDriverDelegate: nil)
-//  @IBOutlet var mCheckNowForUpdateMenuItem : NSMenuItem? = nil
   @IBOutlet var mUsingSparkleTextField : NSTextField? = nil
   @IBOutlet var mSparkleLastCheckTimeTextField : NSTextField? = nil
   @IBOutlet var mAutomaticallyCheckForUpdateCheckBox : NSButton? = nil
@@ -125,8 +124,6 @@ fileprivate let SU_LAST_CHECK_TIME = "SULastCheckTime"
   //····················································································································
 
   nonisolated override func awakeFromNib () {
-//    self.mCheckNowForUpdateMenuItem?.target = self
-//    self.mCheckNowForUpdateMenuItem?.action = #selector (Self.checkForUpdatesAction (_:))
     DispatchQueue.main.async {
       self.mUsingSparkleTextField?.stringValue = "Avec Sparkle " + self.sparkleVersionString ()
       self.mAutomaticallyCheckForUpdateCheckBox?.bind (
