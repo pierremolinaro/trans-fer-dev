@@ -7,6 +7,7 @@
 //--------------------------------------------------------------------------------------------------
 
 import SwiftUI
+//import Combine
 
 //--------------------------------------------------------------------------------------------------
 
@@ -46,6 +47,7 @@ struct Document_TransfertPIC_View : View {
 
   @State private var mTransfertParFTP : TransfertParFTP? = nil
   @State private var mWindow : NSWindow? = nil
+  @State private var mString = "Hello"
 
   private var mTextLogger = TextLogger ()
 
@@ -54,14 +56,15 @@ struct Document_TransfertPIC_View : View {
   var body : some View {
     VStack {
       WindowAccessor (){ window in self.mWindow = window }.frame (width: 0, height: 0)
+      TextField ("Nom du source", text: self.$mString)
       HStack {
         Image (nsImage : NSImage (named: "TransfertPIC")!)
         GroupBox (label: Text("Données du document")) {
           Form {
-            TextField ("Nom du source", text: self.$mDocument.mNomFirmware)
-            TextField ("Nom de l'updater", text: self.$mDocument.mNomUpdater)
-            TextField ("Nom du firmware", text: self.$mDocument.mSignature)
-            TextField ("Adresse CAN des PICs", text: self.$mDocument.mAdressesCAN)
+//            TextField ("Nom du source", text: self.$mDocument.mNomFirmware)
+//            TextField ("Nom de l'updater", text: self.$mDocument.mNomUpdater)
+//            TextField ("Nom du firmware", text: self.$mDocument.mSignature)
+//            TextField ("Adresse CAN des PICs", text: self.$mDocument.mAdressesCAN)
             Toggle ("Optimisation de la compilation Piccolo", isOn: self.$mDocument.mOptimisation)
           }
         }
@@ -105,9 +108,6 @@ struct Document_TransfertPIC_View : View {
         }
       }
       TextLoggerView (self.mTextLogger)
-      TextLoggerView (self.mTextLogger)
-//      TextEditor (text: self.$mString)
-//      .font (Font.body.monospacedDigit ())
     }.padding (12).frame (height: 500)
   }
 
@@ -120,7 +120,7 @@ struct Document_TransfertPIC_View : View {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   private func effacerAvantOperations () {
-    self.mTextLogger.removeAll ()
+    self.mTextLogger.removeContent ()
     self.mStep1StatusImage = unknownStatusImage
     self.mStep2StatusImage = unknownStatusImage
     self.mStep3StatusImage = unknownStatusImage

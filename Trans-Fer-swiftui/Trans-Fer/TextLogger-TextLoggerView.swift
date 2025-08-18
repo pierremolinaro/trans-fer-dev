@@ -7,12 +7,11 @@
 //--------------------------------------------------------------------------------------------------
 
 import SwiftUI
-// import Combine // Required for ObservableObject
 import AppKit
 
 //--------------------------------------------------------------------------------------------------
 
-class TextLogger : NSObject, NSTextStorageDelegate { // , ObservableObject {
+class TextLogger : NSObject {
 
   fileprivate var mTextStorage : NSTextStorage = NSTextStorage ()
   fileprivate var mFont = NSFont.monospacedSystemFont (ofSize: 12.0, weight: .regular)
@@ -21,27 +20,26 @@ class TextLogger : NSObject, NSTextStorageDelegate { // , ObservableObject {
 
   override init () {
     super.init ()
-    self.mTextStorage.delegate = self
     self.mTextStorage.font = self.mFont
     let attributes : [NSAttributedString.Key : Any] = [
       .font: self.mFont
     ]
-    let at = NSAttributedString (string: "Hello", attributes: attributes)
-//    self.mTextStorage.beginEditing ()
+    let at = NSAttributedString (string: "", attributes: attributes)
+    self.mTextStorage.beginEditing ()
     self.mTextStorage.setAttributedString (at)
-//    self.mTextStorage.endEditing ()
+    self.mTextStorage.endEditing ()
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  func removeAll () {
-//    self.mTextStorage.beginEditing ()
+  func removeContent () {
     let attributes : [NSAttributedString.Key : Any] = [
       .font: self.mFont,
       .foregroundColor: NSColor.blue
     ]
-    self.mTextStorage.setAttributedString (NSAttributedString (string: "Cleared", attributes: attributes))
-//    self.mTextStorage.endEditing ()
+    self.mTextStorage.beginEditing ()
+    self.mTextStorage.setAttributedString (NSAttributedString (string: "", attributes: attributes))
+    self.mTextStorage.endEditing ()
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -102,26 +100,6 @@ class TextLogger : NSObject, NSTextStorageDelegate { // , ObservableObject {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  func textStorage (_ textStorage: NSTextStorage,
-                   didProcessEditing editedMask: NSTextStorageEditActions,
-                   range editedRange: NSRange,
-                   changeInLength delta: Int) { // NSTextStorageDelegate
-//    Swift.print ("textStorage:didProcessEditing \(self.mTextStorage.attributedSubstring(from: .init(location: 0, length: self.mTextStorage.length)))")
-    Swift.print ("textStorage:didProcessEditing \(self.mTextStorage.length)))")
-//    let _ = self.mTextStorage.string
-      let nsString = self.mTextStorage.string as NSString
-      let fullRange = NSRange (location: 0, length: nsString.length)
-//      ps.lineHeightMultiple = CGFloat (self.mLineHeight) / 10.0
-      let defaultAttributes : [NSAttributedString.Key : Any] = [
-        .font: self.mFont,
-        .foregroundColor: NSColor.red,
-//        .paragraphStyle : ps
-      ]
-      self.mTextStorage.setAttributes (defaultAttributes, range: fullRange)
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -132,22 +110,12 @@ struct TextLoggerView : NSViewRepresentable {
 
   var mSharedTextLogger : TextLogger
   let mLayoutManager = NSLayoutManager ()
+  let mTextView : NSTextView
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   init (_ inSharedTextLogger : TextLogger) {
     self.mSharedTextLogger = inSharedTextLogger
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-//  func makeCoordinator () -> TextLoggerViewCoordinator {
-//    return TextLoggerViewCoordinator (self)
-//  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  func makeNSView (context inContext : Context) -> NSScrollView {
   //--- Création du layout manager
     self.mLayoutManager.allowsNonContiguousLayout = true
     self.mSharedTextLogger.mTextStorage.addLayoutManager (self.mLayoutManager)
@@ -158,29 +126,40 @@ struct TextLoggerView : NSViewRepresentable {
     )
     let textContainer = NSTextContainer (size: greatestSize)
     self.mLayoutManager.addTextContainer (textContainer)
-    let textView = NSTextView (frame: .zero, textContainer: textContainer)
+    self.mTextView = NSTextView (frame: .zero, textContainer: textContainer)
+  }
 
-    textView.allowsUndo = false
-    textView.isRichText = true
-    textView.isAutomaticDataDetectionEnabled = false
-    textView.isAutomaticLinkDetectionEnabled = false
-    textView.isAutomaticTextCompletionEnabled = false
-    textView.isAutomaticTextReplacementEnabled = false
-    textView.isAutomaticDashSubstitutionEnabled = false
-    textView.isAutomaticQuoteSubstitutionEnabled = false
-    textView.isAutomaticSpellingCorrectionEnabled = false
-    textView.isEditable = false
-    textView.isSelectable = true
-    textView.minSize = NSSize (width: 100, height: 100)
-    textView.maxSize = greatestSize
-    textView.isHorizontallyResizable = true
-    textView.isVerticallyResizable = true
-    textView.autoresizingMask = [.width]
-  //--- Garde la référence
-//    inContext.coordinator.mTextView = textView
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  func makeCoordinator () -> LoggerViewCoordinator {
+    return LoggerViewCoordinator (self)
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  func makeNSView (context inContext : Context) -> NSScrollView {
+    self.mTextView.allowsUndo = false
+    self.mTextView.isRichText = true
+    self.mTextView.isAutomaticDataDetectionEnabled = false
+    self.mTextView.isAutomaticLinkDetectionEnabled = false
+    self.mTextView.isAutomaticTextCompletionEnabled = false
+    self.mTextView.isAutomaticTextReplacementEnabled = false
+    self.mTextView.isAutomaticDashSubstitutionEnabled = false
+    self.mTextView.isAutomaticQuoteSubstitutionEnabled = false
+    self.mTextView.isAutomaticSpellingCorrectionEnabled = false
+    self.mTextView.isEditable = false
+    self.mTextView.isSelectable = true
+    self.mTextView.minSize = .zero
+    self.mTextView.maxSize = NSSize (
+      width: CGFloat.greatestFiniteMagnitude,
+      height: CGFloat.greatestFiniteMagnitude
+    )
+    self.mTextView.isHorizontallyResizable = true
+    self.mTextView.isVerticallyResizable = true
+    self.mTextView.autoresizingMask = [.width, .height]
   //--- ScrollView
     let scrollView = NSScrollView ()
-    scrollView.documentView = textView
+    scrollView.documentView = self.mTextView
     scrollView.hasVerticalScroller = true
     scrollView.autohidesScrollers = false
     return scrollView
@@ -190,9 +169,6 @@ struct TextLoggerView : NSViewRepresentable {
 
   func updateNSView (_ inUnusedScrollView : NSScrollView,
                      context inUnusedContext : Context) {
-//    Swift.print ("updateNSView '\(self.mSharedTextLogger.mTextStorage.string)'")
-//    self.mTextView.needsDisplay = true
-//    Swift.print ("updateNSView: \(ObjectIdentifier (self.mSharedTextLogger.mTextStorage))")
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -201,19 +177,26 @@ struct TextLoggerView : NSViewRepresentable {
 
 //--------------------------------------------------------------------------------------------------
 
-//final class TextLoggerViewCoordinator { // : NSObject {
-//
-//  private let mParent : TextLoggerView
-//
-//  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//
-//  init (_ inParent : TextLoggerView) {
-//    self.mParent = inParent
-////    super.init ()
-//  }
-//
-//  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//
-//}
+class LoggerViewCoordinator : NSObject, NSTextViewDelegate {
+
+  let mParent : TextLoggerView
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  init (_ inParent : TextLoggerView) {
+    self.mParent = inParent
+    super.init ()
+    self.mParent.mTextView.delegate = self
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  func textViewDidChangeSelection (_ inUnusedNotification : Notification) {  // NSTextViewDelegate
+    self.mParent.mTextView.scrollToEndOfDocument (nil)
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+}
 
 //--------------------------------------------------------------------------------------------------
