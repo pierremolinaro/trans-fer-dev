@@ -21,7 +21,7 @@ struct WindowAccessor : NSViewRepresentable {
   func makeNSView (context: Context) -> NSView {
     let view = NSView ()
     DispatchQueue.main.async {
-      self.callback (view.window)
+      self.callback (unsafe view.window)
     }
     return view
   }

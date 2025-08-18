@@ -47,7 +47,7 @@ struct Document_TransfertPIC_View : View {
   @State private var mTransfertParFTP : TransfertParFTP? = nil
   @State private var mWindow : NSWindow? = nil
 
-  @State private var mString = ""
+  private var mTextLogger = TextLogger ()
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -104,8 +104,10 @@ struct Document_TransfertPIC_View : View {
           Image (nsImage : self.mStep5StatusImage)
         }
       }
-      TextEditor (text: self.$mString)
-      .font (Font.body.monospacedDigit ())
+      TextLoggerView (self.mTextLogger)
+      TextLoggerView (self.mTextLogger)
+//      TextEditor (text: self.$mString)
+//      .font (Font.body.monospacedDigit ())
     }.padding (12).frame (height: 500)
   }
 
@@ -118,7 +120,7 @@ struct Document_TransfertPIC_View : View {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   private func effacerAvantOperations () {
-    self.mString = ""
+    self.mTextLogger.removeAll ()
     self.mStep1StatusImage = unknownStatusImage
     self.mStep2StatusImage = unknownStatusImage
     self.mStep3StatusImage = unknownStatusImage
@@ -151,10 +153,10 @@ struct Document_TransfertPIC_View : View {
     self.mStep2StatusImage = workingStatusImage
     let result = self.conversionEnPiccoloData (self.mDocument.mNomFirmware + ".hex")
     if result == 0 {
-      self.appendSuccessString ("Succès\n")
+      self.mTextLogger.appendSuccessString ("Succès\n")
       self.mStep2StatusImage = okStatusImage
     }else{
-      self.appendErrorString ("Échec (erreur \(result))\n")
+      self.mTextLogger.appendErrorString ("Échec (erreur \(result))\n")
       self.mStep2StatusImage = errorStatusImage
       ioSuccess = false
     }
@@ -163,7 +165,7 @@ struct Document_TransfertPIC_View : View {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   private func conversionEnPiccoloData (_ inFichierHex : String) -> Int {
-    appendCommandString ("Transformer en Piccolo Data\n")
+    self.mTextLogger.appendCommandString ("Transformer en Piccolo Data\n")
     let documentDir = self.mFileURL?.deletingLastPathComponent ().path ?? "?"
   //--- Lire le fichier hex
     let data = try! Data (contentsOf: URL (fileURLWithPath: documentDir + "/" + inFichierHex))
@@ -180,7 +182,7 @@ struct Document_TransfertPIC_View : View {
         if byte ==  ASCII.colon.rawValue {
           enDébutDeLigne = false
         }else{
-          self.appendErrorString ("  Erreur, la ligne ne commence pas par \":\"\n")
+          self.mTextLogger.appendErrorString ("  Erreur, la ligne ne commence pas par \":\"\n")
           return 1
         }
       }else if (byte >= ASCII.zero.rawValue) && (byte <= ASCII.nine.rawValue) {
@@ -212,7 +214,7 @@ struct Document_TransfertPIC_View : View {
         premierCaractère = !premierCaractère
       }else if byte == ASCII.lineFeed.rawValue {
         if !premierCaractère {
-          appendErrorString ("  Erreur de phase sur caractère\n")
+          self.mTextLogger.appendErrorString ("  Erreur de phase sur caractère\n")
           return 2
         }
       //--- Vérifier la somme de contrôle
@@ -221,7 +223,7 @@ struct Document_TransfertPIC_View : View {
           somme &+= v
         }
         if somme != 0 {
-          self.appendErrorString ("  Erreur de somme de contrôle (\(somme))\n")
+          self.mTextLogger.appendErrorString ("  Erreur de somme de contrôle (\(somme))\n")
           return 3
         }
       //---
@@ -240,7 +242,7 @@ struct Document_TransfertPIC_View : View {
         éléments.removeAll ()
         enDébutDeLigne = true
       }else{
-        self.appendErrorString ("  Erreur, caractère inconnu\n")
+        self.mTextLogger.appendErrorString ("  Erreur, caractère inconnu\n")
         return 4
       }
     }
@@ -274,7 +276,7 @@ struct Document_TransfertPIC_View : View {
         listBlocs.append (bloc)
       }
     }
-    appendMessageString ("  \(listBlocs.count) blocs\n")
+    self.mTextLogger.appendMessageString ("  \(listBlocs.count) blocs\n")
   //--- Engendrer le fichier Piccolo
     var s = "data16 bootloaderData {\n"
     s += "#--- Bloc count\n"
@@ -356,10 +358,10 @@ struct Document_TransfertPIC_View : View {
     let (command, arguments) = self.commandeCompilationSourcePiccolo ()
     let result = self.runCommand (command, arguments)
     if result == 0 {
-      self.appendSuccessString ("Succès\n")
+      self.mTextLogger.appendSuccessString ("Succès\n")
       self.mStep1StatusImage = okStatusImage
     }else{
-      self.appendErrorString ("Échec (erreur \(result))\n")
+      self.mTextLogger.appendErrorString ("Échec (erreur \(result))\n")
       self.mStep1StatusImage = errorStatusImage
       ioSuccess = false
     }
@@ -388,10 +390,10 @@ struct Document_TransfertPIC_View : View {
     let (command, arguments) = self.commandeCompilationUpdaterPiccolo ()
     let result = self.runCommand (command, arguments)
     if result == 0 {
-      self.appendSuccessString ("Succès\n")
+      self.mTextLogger.appendSuccessString ("Succès\n")
       self.mStep3StatusImage = okStatusImage
     }else{
-      self.appendErrorString ("Échec (erreur \(result))\n")
+      self.mTextLogger.appendErrorString ("Échec (erreur \(result))\n")
       self.mStep3StatusImage = errorStatusImage
       ioSuccess = false
     }
@@ -423,10 +425,10 @@ struct Document_TransfertPIC_View : View {
       result = self.construireFichierBinaireDistribution (fichierUpdaterHex, array, signatureFirmware)
     }
     if result == 0 {
-      self.appendSuccessString ("Succès\n")
+      self.mTextLogger.appendSuccessString ("Succès\n")
       self.mStep4StatusImage = okStatusImage
     }else{
-      self.appendErrorString ("Échec (erreur \(result))\n")
+      self.mTextLogger.appendErrorString ("Échec (erreur \(result))\n")
       self.mStep4StatusImage = errorStatusImage
       ioSuccess = false
     }
@@ -443,7 +445,7 @@ struct Document_TransfertPIC_View : View {
         if let adresse = UInt8 (components2 [0]) {
           result.append (adresse)
         }else{
-          self.appendErrorString ("Erreur, \(v) n'est pas un nombre entre 0 et 255\n")
+          self.mTextLogger.appendErrorString ("Erreur, \(v) n'est pas un nombre entre 0 et 255\n")
           return ([], 6)
         }
       }else if components2.count == 2 {
@@ -454,11 +456,11 @@ struct Document_TransfertPIC_View : View {
             adresse += 1
           }
         }else{
-          self.appendErrorString ("Erreur, \(v) n'est pas un intervalle valide\n")
+          self.mTextLogger.appendErrorString ("Erreur, \(v) n'est pas un intervalle valide\n")
           return ([], 7)
         }
       }else{
-        self.appendErrorString ("Erreur, \(v) n'est pas invalide\n")
+        self.mTextLogger.appendErrorString ("Erreur, \(v) n'est pas invalide\n")
         return ([], 8)
       }
     }
@@ -470,12 +472,12 @@ struct Document_TransfertPIC_View : View {
   private func construireFichierBinaireDistribution (_ SOURCE_PICCOLO_UPDATER : String,
                                              _ PICS_CIBLE : [UInt8],
                                              _ NOM_PIC_FIRMWARE : String) -> Int {
-    appendCommandString ("③ Construire le fichier binaire de la distribution\n")
+    self.mTextLogger.appendCommandString ("③ Construire le fichier binaire de la distribution\n")
     var s = "PICs cibles :"
     for v in PICS_CIBLE {
       s += " \(v)"
     }
-    appendMessageString (s + "\n")
+    self.mTextLogger.appendMessageString (s + "\n")
   //-------------------------------------------------------- Read HEX file
     let documentDir = self.mFileURL?.deletingLastPathComponent ().path ?? "?"
     let hexString = try! String (contentsOf: URL (fileURLWithPath: documentDir + "/" + SOURCE_PICCOLO_UPDATER))
@@ -487,7 +489,7 @@ struct Document_TransfertPIC_View : View {
         var data = line.data (using: .ascii)!
         let b = data.remove (at: 0)
         if b != ASCII.colon.rawValue {
-          appendErrorString ("Erreur, une ligne ne commence pas par ':'\n")
+          self.mTextLogger.appendErrorString ("Erreur, une ligne ne commence pas par ':'\n")
           return 2
         }
         var ok = true
@@ -503,7 +505,7 @@ struct Document_TransfertPIC_View : View {
           }
         }
         if !ok {
-          appendErrorString ("Erreur, le caractère n'est pas un chiffre hex.\n")
+          self.mTextLogger.appendErrorString ("Erreur, le caractère n'est pas un chiffre hex.\n")
           return 1
         }
       }
@@ -514,17 +516,17 @@ struct Document_TransfertPIC_View : View {
     let keys = codeDictionary.keys.sorted ()
     let minAddress = keys [0]
     let adresseDébut = adresseBase! + UInt32 (minAddress)
-    appendMessageString ("Adresse de flashage : 0x" + String (adresseDébut, radix: 16, uppercase: true) + "\n")
+    self.mTextLogger.appendMessageString ("Adresse de flashage : 0x" + String (adresseDébut, radix: 16, uppercase: true) + "\n")
     contents.append (UInt8 ((adresseDébut >> 14) & 0xFF))
     contents.append (UInt8 ((adresseDébut >>  6) & 0xFF))
   //--- Écrire la description des adresses des PICs destinataires
     var adressesOrdonnées = PICS_CIBLE.sorted ()
-    appendMessageString ("Adresses des PICs destinataires : \(adressesOrdonnées)\n")
+    self.mTextLogger.appendMessageString ("Adresses des PICs destinataires : \(adressesOrdonnées)\n")
     var adresseCourante = adressesOrdonnées.remove (at: 0)
     var nombreAdressesConsécutives : UInt8 = 1
     for adressePIC in adressesOrdonnées {
       if adressePIC == (adresseCourante + nombreAdressesConsécutives - 1) {
-        appendErrorString ("Erreur, doublon dans la liste PICS_CIBLE : \(adressePIC) apparaît plusieurs fois\n")
+        self.mTextLogger.appendErrorString ("Erreur, doublon dans la liste PICS_CIBLE : \(adressePIC) apparaît plusieurs fois\n")
         return 3
       }else if adressePIC == (adresseCourante + nombreAdressesConsécutives) {
         nombreAdressesConsécutives += 1
@@ -549,7 +551,7 @@ struct Document_TransfertPIC_View : View {
     for byte in contents {
       accumulateByteWithLookUpTable (byte: byte, crc: &crc)
     }
-    appendMessageString ("CRC: 0x" + String (crc, radix: 16, uppercase: true) + "\n")
+    self.mTextLogger.appendMessageString ("CRC: 0x" + String (crc, radix: 16, uppercase: true) + "\n")
     contents.append (UInt8 ((crc >> 24) & 0xFF))
     contents.append (UInt8 ((crc >> 16) & 0xFF))
     contents.append (UInt8 ((crc >>  8) & 0xFF))
@@ -559,7 +561,7 @@ struct Document_TransfertPIC_View : View {
     for byte in contents {
       accumulateByteWithLookUpTable (byte: byte, crc: &crc)
     }
-    appendMessageString ("Vérification CRC: \(String (crc, radix: 16, uppercase: true)) (\((crc == 0) ? "ok" : "erreur"))\n") // Doit être 0
+    self.mTextLogger.appendMessageString ("Vérification CRC: \(String (crc, radix: 16, uppercase: true)) (\((crc == 0) ? "ok" : "erreur"))\n") // Doit être 0
     if crc != 0 {
       return 4
     }
@@ -582,21 +584,21 @@ struct Document_TransfertPIC_View : View {
       processCurrentDirectoryPath: self.mFileURL?.deletingLastPathComponent().path ?? "?",
       window: self.mWindow!,
       alertTitle: "Transfert par FTP",
-      commandStringHandler: { self.appendCommandString ($0) },
-      messageStringHandler: { self.appendMessageString ($0) },
+      commandStringHandler: { self.mTextLogger.appendCommandString ($0) },
+      messageStringHandler: { self.mTextLogger.appendMessageString ($0) },
       terminationHandler: { self.terminaisonTransfertParFTP ($0) }
     )
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  private func terminaisonTransfertParFTP (_ inResult : Int32) {
+  private nonisolated func terminaisonTransfertParFTP (_ inResult : Int32) {
     DispatchQueue.main.async {
       if inResult == 0 {
-        self.appendSuccessString ("Succès\n")
+        self.mTextLogger.appendSuccessString ("Succès\n")
         self.mStep5StatusImage = okStatusImage
       }else{
-        self.appendErrorString ("Échec (erreur \(inResult))\n")
+        self.mTextLogger.appendErrorString ("Échec (erreur \(inResult))\n")
         self.mStep5StatusImage = errorStatusImage
       }
       self.mTransfertParFTP = nil
@@ -629,7 +631,7 @@ struct Document_TransfertPIC_View : View {
       str += " " + s
     }
     str += "\n"
-    self.appendCommandString (str)
+    self.mTextLogger.appendCommandString (str)
     if let documentDir = self.mFileURL?.deletingLastPathComponent ().path {
     //--- Run Command
       let task = Process ()
@@ -646,7 +648,7 @@ struct Document_TransfertPIC_View : View {
         while newData.count > 0 {
           data.append (newData)
           if let str = String (data: data, encoding: .utf8) {
-            DispatchQueue.main.async { self.appendMessageString (str) }
+            DispatchQueue.main.async { self.mTextLogger.appendMessageString (str) }
             data = Data ()
           }
           newData = stdoutHandle.availableData
@@ -658,38 +660,9 @@ struct Document_TransfertPIC_View : View {
       let status = task.terminationStatus
       return status
     }else{
-      self.appendErrorString ("Cannot run, the document is not saved\n")
+      self.mTextLogger.appendErrorString ("Cannot run, the document is not saved\n")
       return 1
     }
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-//  private func clearLogWindow () {
-//  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  private func appendCommandString (_ inMessage : String) {
-    self.mString += inMessage
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  private func appendMessageString (_ inMessage : String) {
-    self.mString += inMessage
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  private func appendSuccessString (_ inMessage : String) {
-    self.mString += inMessage
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  private func appendErrorString (_ inMessage : String) {
-    self.mString += inMessage
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
