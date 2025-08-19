@@ -7,7 +7,6 @@
 //--------------------------------------------------------------------------------------------------
 
 import SwiftUI
-//import Combine
 
 //--------------------------------------------------------------------------------------------------
 
@@ -30,9 +29,10 @@ struct Document_TransfertPIC_View : View {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  init (file inFile : FileDocumentConfiguration <Document_TransfertPIC>) {
-    self.mFileURL = inFile.fileURL
-    self._mDocument = inFile.$document
+  init (document inDocument : Binding <Document_TransfertPIC>,
+        fileURL inFileURL : URL?) {
+    self.mFileURL = inFileURL
+    self._mDocument = inDocument
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -47,7 +47,7 @@ struct Document_TransfertPIC_View : View {
 
   @State private var mTransfertParFTP : TransfertParFTP? = nil
   @State private var mWindow : NSWindow? = nil
-  @State private var mString = "Hello"
+//  @State private var mString = "Hello"
 
   private var mTextLogger = TextLogger ()
 
@@ -56,15 +56,15 @@ struct Document_TransfertPIC_View : View {
   var body : some View {
     VStack {
       WindowAccessor (){ window in self.mWindow = window }.frame (width: 0, height: 0)
-      TextField ("Nom du source", text: self.$mString)
+//      TextField ("Nom du source", text: self.$mString)
       HStack {
         Image (nsImage : NSImage (named: "TransfertPIC")!)
         GroupBox (label: Text("Données du document")) {
           Form {
-//            TextField ("Nom du source", text: self.$mDocument.mNomFirmware)
-//            TextField ("Nom de l'updater", text: self.$mDocument.mNomUpdater)
-//            TextField ("Nom du firmware", text: self.$mDocument.mSignature)
-//            TextField ("Adresse CAN des PICs", text: self.$mDocument.mAdressesCAN)
+            TextField ("Nom du source", text: self.$mDocument.mNomFirmware)
+            TextField ("Nom de l'updater", text: self.$mDocument.mNomUpdater)
+            TextField ("Nom du firmware", text: self.$mDocument.mSignature)
+            TextField ("Adresse CAN des PICs", text: self.$mDocument.mAdressesCAN)
             Toggle ("Optimisation de la compilation Piccolo", isOn: self.$mDocument.mOptimisation)
           }
         }
@@ -115,6 +115,16 @@ struct Document_TransfertPIC_View : View {
 
   private func supprimerFichiersProduits () {
     self.effacerAvantOperations ()
+    if let documentDirectory = self.mFileURL?.deletingLastPathComponent ().path {
+      try? FileManager.default.removeItem (atPath: documentDirectory + "/" + self.mDocument.mNomFirmware + ".asm")
+      try? FileManager.default.removeItem (atPath: documentDirectory + "/" + self.mDocument.mNomFirmware + ".hex")
+      try? FileManager.default.removeItem (atPath: documentDirectory + "/" + self.mDocument.mNomFirmware + ".hex.piccolo")
+      try? FileManager.default.removeItem (atPath: documentDirectory + "/" + self.mDocument.mNomFirmware + ".list")
+      try? FileManager.default.removeItem (atPath: documentDirectory + "/" + self.mDocument.mNomUpdater + ".hex")
+      try? FileManager.default.removeItem (atPath: documentDirectory + "/" + self.mDocument.mNomUpdater + ".asm")
+      try? FileManager.default.removeItem (atPath: documentDirectory + "/" + self.mDocument.mNomUpdater + ".list")
+      try? FileManager.default.removeItem (atPath: documentDirectory + "/" + self.mDocument.mSignature + ".binpic")
+    }
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
