@@ -46,20 +46,20 @@ struct Document_TransfertPIC_View : View {
   @State private var mStep5StatusImage = unknownStatusImage
 
   @State private var mTransfertParFTP : TransfertParFTP? = nil
-  @State private var mWindow : NSWindow? = nil
-//  @State private var mString = "Hello"
+  @State private var mShowTransfertSheet = false
 
   private var mTextLogger = TextLogger ()
+
+//  @State private var mString = "Hello"
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   var body : some View {
     VStack {
-      WindowAccessor (){ window in self.mWindow = window }.frame (width: 0, height: 0)
-//      TextField ("Nom du source", text: self.$mString)
+//      TextField ("Exemple", text: self.$mString)
       HStack {
         Image (nsImage : NSImage (named: "TransfertPIC")!)
-        GroupBox (label: Text("Données du document")) {
+        GroupBox (label: Text ("Données du document")) {
           Form {
             TextField ("Nom du source", text: self.$mDocument.mNomFirmware)
             TextField ("Nom de l'updater", text: self.$mDocument.mNomUpdater)
@@ -109,6 +109,14 @@ struct Document_TransfertPIC_View : View {
       }
       TextLoggerView (self.mTextLogger)
     }.padding (12).frame (height: 500)
+    .sheet (
+      isPresented: $mShowTransfertSheet
+    ) {
+      VStack {
+        Text ("Transfert par FTP")
+        Button ("Arrêter") { self.terminaisonAvecErreurTransfertParFTP () }
+      }.padding (12)
+    }
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -592,25 +600,29 @@ struct Document_TransfertPIC_View : View {
       command: command,
       arguments: arguments,
       processCurrentDirectoryPath: self.mFileURL?.deletingLastPathComponent().path ?? "?",
-      window: self.mWindow!,
-      alertTitle: "Transfert par FTP",
+      alertState: self.$mShowTransfertSheet,
       commandStringHandler: { self.mTextLogger.appendCommandString ($0) },
       messageStringHandler: { self.mTextLogger.appendMessageString ($0) },
-      terminationHandler: { self.terminaisonTransfertParFTP ($0) }
+      terminationSuccessHandler: { self.terminaisonAvecSuccessTransfertParFTP () }
     )
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  private nonisolated func terminaisonTransfertParFTP (_ inResult : Int32) {
-    DispatchQueue.main.async {
-      if inResult == 0 {
-        self.mTextLogger.appendSuccessString ("Succès\n")
-        self.mStep5StatusImage = okStatusImage
-      }else{
-        self.mTextLogger.appendErrorString ("Échec (erreur \(inResult))\n")
-        self.mStep5StatusImage = errorStatusImage
-      }
+  private func terminaisonAvecSuccessTransfertParFTP () {
+    self.mShowTransfertSheet = false
+    self.mTextLogger.appendSuccessString ("Succès\n")
+    self.mStep5StatusImage = okStatusImage
+    self.mTransfertParFTP = nil
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  private func terminaisonAvecErreurTransfertParFTP () {
+    self.mShowTransfertSheet = false
+    if let transfert = self.mTransfertParFTP {
+      self.mTextLogger.appendErrorString ("Échec (erreur \(transfert.result))\n")
+      self.mStep5StatusImage = errorStatusImage
       self.mTransfertParFTP = nil
     }
   }

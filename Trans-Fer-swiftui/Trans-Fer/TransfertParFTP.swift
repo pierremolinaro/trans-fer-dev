@@ -7,6 +7,7 @@
 //--------------------------------------------------------------------------------------------------
 
 import AppKit
+import SwiftUI
 
 //--------------------------------------------------------------------------------------------------
 
@@ -17,18 +18,21 @@ final class TransfertParFTP : NSObject {
   private var mAlert : NSAlert? = nil
   private var mData = Data ()
   private var mMessageStringCallBack : Optional <(String) -> Void> = nil
+  private var mTerminationSuccessHandler : Optional <() -> Void> = nil
+  private var mResult : Int32 = 0
+  var result : Int32 { return self.mResult }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   func runCancelableCommand (command cmd : String,
                              arguments args : [String],
                              processCurrentDirectoryPath inProcessCurrentDirectoryPath : String,
-                             window inWindow : NSWindow,
-                             alertTitle inTitle : String,
+                             alertState inAlertState : Binding <Bool>,
                              commandStringHandler inCommandStringCallBack : @escaping (String) -> Void,
                              messageStringHandler inMessageStringCallBack : @escaping (String) -> Void,
-                             terminationHandler inCallBack : @escaping @Sendable (_ inStatus : Int32) -> Void) {
+                             terminationSuccessHandler inTerminationSuccessHandler : @escaping () -> Void) {
     self.mMessageStringCallBack = inMessageStringCallBack
+    self.mTerminationSuccessHandler = inTerminationSuccessHandler
   //--- Command String
     var str = "+ " + cmd
     for s in args {
@@ -52,28 +56,30 @@ final class TransfertParFTP : NSObject {
       name: NSNotification.Name.NSFileHandleDataAvailable,
       object: stdoutHandle
     )
-  //--- Display Panel ?
-    let alert = NSAlert ()
-    self.mAlert = alert
-    alert.messageText = inTitle
-    alert.addButton (withTitle: "Arrêter")
-    alert.beginSheetModal (for: inWindow) { (_ inResponse : NSApplication.ModalResponse) in
-      NotificationCenter.default.removeObserver (
-        self,
-        name: NSNotification.Name.NSFileHandleDataAvailable,
-        object: stdoutHandle
-      )
-      DispatchQueue.main.async {
-        self.mAlert = nil
-        if process.isRunning {
-          process.terminate ()
-          inCallBack (1)
-        }else{
-          let status = process.terminationStatus
-          inCallBack (status)
-        }
-      }
-    }
+  //--- Display Alert
+    inAlertState.wrappedValue = true
+//    let alert = NSAlert ()
+//    self.mAlert = alert
+//    alert.messageText = "???"
+//    alert.addButton (withTitle: "Arrêter")
+//    alert.beginSheetModal (for: inWindow) { (_ inResponse : NSApplication.ModalResponse) in
+//      NotificationCenter.default.removeObserver (
+//        self,
+//        name: NSNotification.Name.NSFileHandleDataAvailable,
+//        object: stdoutHandle
+//      )
+//      DispatchQueue.main.async {
+//        self.mAlert = nil
+//        if process.isRunning {
+//          process.terminate ()
+//          self.mResult = 1
+//          inCallBack (1)
+//        }else{
+//          self.mResult = process.terminationStatus
+//          inCallBack (status)
+//        }
+//      }
+//    }
   //--- Launch command
     process.launch ()
   }
@@ -90,8 +96,8 @@ final class TransfertParFTP : NSObject {
           fileHandle.waitForDataInBackgroundAndNotify ()
           self.mData = Data ()
         }
-      }else if let button = self.mAlert?.buttons.last {
-        button.performClick (nil)
+      }else {
+        self.mTerminationSuccessHandler? ()
       }
     }
   }
