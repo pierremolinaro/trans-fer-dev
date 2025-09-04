@@ -11,7 +11,7 @@ import UniformTypeIdentifiers
 
 //--------------------------------------------------------------------------------------------------
 
-nonisolated struct Document_TransfertPIC : FileDocument {
+nonisolated struct TransfertPIC_Document : FileDocument {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

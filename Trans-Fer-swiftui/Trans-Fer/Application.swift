@@ -15,17 +15,17 @@ import SwiftUI
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   var body : some Scene {
-    WindowGroup {
-      StartUpView ()
-    }
-    Settings {
-      PreferencesView ().navigationTitle("Préférences").frame (width: 600)
-    }
-    DocumentGroup (newDocument: Document_TransfertPIC ()) { configuration in
-      Document_TransfertPIC_View (
+//    WindowGroup {
+//      StartUpView ()
+//    }
+    DocumentGroup (newDocument: TransfertPIC_Document ()) { configuration in
+      TransfertPIC_DocumentView (
         document: configuration.$document,
         fileURL: configuration.fileURL
       )
+    }
+    Settings {
+      PreferencesView ().navigationTitle("Préférences").frame (width: 600)
     }
   }
 

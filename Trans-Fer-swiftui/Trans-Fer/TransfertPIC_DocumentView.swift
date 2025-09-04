@@ -18,18 +18,18 @@ let workingStatusImage = NSImage (named: NSImage.Name (NSImage.smartBadgeTemplat
 
 //--------------------------------------------------------------------------------------------------
 
-struct Document_TransfertPIC_View : View {
+struct TransfertPIC_DocumentView : View {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  init (document inDocument : Binding <Document_TransfertPIC>) {
+  init (document inDocument : Binding <TransfertPIC_Document>) {
     self._mDocument = inDocument
     self.mFileURL = nil
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  init (document inDocument : Binding <Document_TransfertPIC>,
+  init (document inDocument : Binding <TransfertPIC_Document>,
         fileURL inFileURL : URL?) {
     self.mFileURL = inFileURL
     self._mDocument = inDocument
@@ -37,7 +37,7 @@ struct Document_TransfertPIC_View : View {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  @Binding private var mDocument : Document_TransfertPIC
+  @Binding private var mDocument : TransfertPIC_Document
   private let mFileURL : URL?
   @State private var mStep1StatusImage = unknownStatusImage
   @State private var mStep2StatusImage = unknownStatusImage
@@ -109,9 +109,7 @@ struct Document_TransfertPIC_View : View {
       }
       TextLoggerView (self.mTextLogger)
     }.padding (12).frame (height: 500)
-    .sheet (
-      isPresented: $mShowTransfertSheet
-    ) {
+    .sheet (isPresented: $mShowTransfertSheet) {
       VStack {
         Text ("Transfert par FTP")
         Button ("Arrêter") { self.terminaisonAvecErreurTransfertParFTP () }
@@ -717,7 +715,7 @@ fileprivate struct Bloc {
 //--------------------------------------------------------------------------------------------------
 
 #Preview {
-  Document_TransfertPIC_View (document: .constant (Document_TransfertPIC ()))
+  TransfertPIC_DocumentView (document: .constant (TransfertPIC_Document ()))
 }
 
 //--------------------------------------------------------------------------------------------------
