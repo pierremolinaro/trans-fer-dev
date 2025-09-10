@@ -63,16 +63,15 @@ struct SparkleView : View {
       HStack {
         Text ("Dernière recherche ")
         Text (self.lastUpdateCheckDateString ())
-//        Button ("set") { self.mLastUpdateCheckDate.date = Date () }
         Spacer ()
       }
     }
-    .onChange (of: self.mAutomaticallyChecksForUpdates) { _ in
+    .onChange (of: self.mAutomaticallyChecksForUpdates) { (oldValue, newValue) in
       self.mUpdaterController.updater.willChangeValue (for: \.automaticallyChecksForUpdates)
       self.mUpdaterController.updater.automaticallyChecksForUpdates = self.mAutomaticallyChecksForUpdates
       self.mUpdaterController.updater.didChangeValue (for: \.automaticallyChecksForUpdates)
     }
-    .onChange (of: self.mCheckIntervalInSeconds) { _ in
+    .onChange (of: self.mCheckIntervalInSeconds) { (oldValue, newValue) in
       self.mUpdaterController.updater.willChangeValue (for: \.updateCheckInterval)
       self.mUpdaterController.updater.updateCheckInterval = Double (self.mCheckIntervalInSeconds)
       self.mUpdaterController.updater.didChangeValue (for: \.updateCheckInterval)

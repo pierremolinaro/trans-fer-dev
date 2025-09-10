@@ -1,12 +1,11 @@
 #! /usr/bin/swift
-
-//----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 import Foundation
 
-//----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Version Trans-Fer
-//----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 let VERSION_TRANS_FER = "1.0.6"
 let MAC_OS_MINIMUM_VERSION = "10.15"
@@ -21,9 +20,9 @@ let NEWS : [String] = [
   "Document transfertRP2040 : paramétrage de la plateforme"
 ]
 
-//----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 //   FOR PRINTING IN COLOR
-//----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 let BLACK   = "\u{1B}[0;30m"
 let RED     = "\u{1B}[0;31m"
@@ -40,9 +39,9 @@ let BOLD_BLUE = BOLD + BLUE
 let BOLD_GREEN = BOLD + GREEN
 let BOLD_RED = BOLD + RED
 
-//----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 //   runCommand
-//----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 func runCommand (_ cmd : String, _ args : [String]) {
   var str = "+ " + cmd
@@ -59,9 +58,9 @@ func runCommand (_ cmd : String, _ args : [String]) {
   }
 }
 
-//----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 //   runHiddenCommand
-//----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 func runHiddenCommand (_ cmd : String, _ args : [String]) -> String {
   var str = "+ " + cmd
@@ -95,9 +94,9 @@ func runHiddenCommand (_ cmd : String, _ args : [String]) -> String {
   return String (data: data, encoding: .ascii)!
 }
 
-//----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 //   dictionaryFromJsonFile
-//----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 struct VersionDescriptor : Codable {
   var bugfixes = [String] ()
@@ -111,7 +110,7 @@ struct VersionDescriptor : Codable {
   var osmin = ""
 }
 
-//----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 let fm = FileManager ()
 //-------------------- Get script absolute path
@@ -130,7 +129,7 @@ let TRANS_FER_DIR = "trans-fer-dev"
 //runCommand ("/bin/rm", ["-f", "archive.zip"])
 runCommand ("/bin/rm", ["-fr", TRANS_FER_DIR])
 runCommand ("/usr/bin/git", ["clone", "https://github.com/pierremolinaro/trans-fer-dev.git"])
-fm.changeCurrentDirectoryPath (DISTRIBUTION_DIR + "/" + TRANS_FER_DIR)
+fm.changeCurrentDirectoryPath (DISTRIBUTION_DIR + "/" + TRANS_FER_DIR + "/Tran-Fer-cocoa")
 //-------------------- Obtenir l'année
 let ANNEE = Calendar.current.component (.year, from: Date ())
 print ("ANNÉE : \(ANNEE)")
@@ -147,7 +146,7 @@ do{
 //  let sha = runHiddenCommand ("/usr/bin/git", ["log", "-n1", "--format=format:\"%H\""])
 //  Swift.print ("sha \(sha)")
 //-------------------- Écrire le SHA
-  let fileRelativePath = "Trans-Fer/Credits.rtf"
+  let fileRelativePath = "Trans-Fer/Tran-Fer-cocoa/Credits.rtf"
   let str : String = try! String (contentsOf: URL (fileURLWithPath: fileRelativePath), encoding: .utf8)
   let components = str.components (separatedBy: "$SHA_GITHUB$")
   let str2 = components.joined (separator: sha)
@@ -157,7 +156,7 @@ do{
 //-------------------- Fixer le numéro de version
   let chaîneVersion = "CURRENT_PROJECT_VERSION = \(VERSION_TRANS_FER)\n"
   let dataChaîneVersion = chaîneVersion.data (using: .utf8)!
-  let local_xcconfig_FileFullPath = DISTRIBUTION_DIR + "/" + TRANS_FER_DIR + "/Trans-Fer/local.xcconfig"
+  let local_xcconfig_FileFullPath = DISTRIBUTION_DIR + "/" + TRANS_FER_DIR + "/Trans-Fer/Tran-Fer-cocoa/local.xcconfig"
   try dataChaîneVersion.write (to: URL (fileURLWithPath: local_xcconfig_FileFullPath), options: .atomic)
 //-------------------- Compiler le projet Xcode
   let debutCompilation = Date ()
@@ -175,6 +174,7 @@ do{
 //  runCommand ("/usr/bin/productbuild", ["--component-compression", "auto", "--component", "build/Debug/" + PRODUCT_NAME + ".app", "/Applications", packageFile])
 //  runCommand ("/bin/cp", [packageFile, DISTRIBUTION_DIR])
 //-------------------- Créer l'archive de Cocoa canari
+fm.changeCurrentDirectoryPath (DISTRIBUTION_DIR + "/" + TRANS_FER_DIR)
   let nomArchive = PRODUCT_NAME + "-" + VERSION_TRANS_FER
   runCommand ("/bin/mkdir", [nomArchive])
 //  runCommand ("/bin/cp", [packageFile, nomArchive])
@@ -249,4 +249,4 @@ do{
   print ("Exception \(error)")
 }
 
-//----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------

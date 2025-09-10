@@ -19,6 +19,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
+				MyTextField.swift,
 			);
 			target = CF49004A2E507BC700CD2CE4 /* Trans-Fer */;
 		};
