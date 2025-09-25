@@ -125,11 +125,10 @@ while fm.fileExists (atPath: DISTRIBUTION_DIR) {
 runCommand ("/bin/mkdir", [DISTRIBUTION_DIR])
 fm.changeCurrentDirectoryPath (DISTRIBUTION_DIR)
 //-------------------- Importer Trans-Fer
-let TRANS_FER_DIR = "trans-fer-dev"
 //runCommand ("/bin/rm", ["-f", "archive.zip"])
-runCommand ("/bin/rm", ["-fr", TRANS_FER_DIR])
+runCommand ("/bin/rm", ["-fr", "trans-fer-dev"])
 runCommand ("/usr/bin/git", ["clone", "https://github.com/pierremolinaro/trans-fer-dev.git"])
-fm.changeCurrentDirectoryPath (DISTRIBUTION_DIR + "/" + TRANS_FER_DIR + "/Tran-Fer-cocoa")
+fm.changeCurrentDirectoryPath (DISTRIBUTION_DIR + "/trans-fer-dev/Tran-Fer-cocoa")
 //-------------------- Obtenir l'année
 let ANNEE = Calendar.current.component (.year, from: Date ())
 print ("ANNÉE : \(ANNEE)")
@@ -146,7 +145,7 @@ do{
 //  let sha = runHiddenCommand ("/usr/bin/git", ["log", "-n1", "--format=format:\"%H\""])
 //  Swift.print ("sha \(sha)")
 //-------------------- Écrire le SHA
-  let fileRelativePath = "Trans-Fer/Tran-Fer-cocoa/Credits.rtf"
+  let fileRelativePath = "Trans-Fer/Credits.rtf"
   let str : String = try! String (contentsOf: URL (fileURLWithPath: fileRelativePath), encoding: .utf8)
   let components = str.components (separatedBy: "$SHA_GITHUB$")
   let str2 = components.joined (separator: sha)
@@ -156,7 +155,7 @@ do{
 //-------------------- Fixer le numéro de version
   let chaîneVersion = "CURRENT_PROJECT_VERSION = \(VERSION_TRANS_FER)\n"
   let dataChaîneVersion = chaîneVersion.data (using: .utf8)!
-  let local_xcconfig_FileFullPath = DISTRIBUTION_DIR + "/" + TRANS_FER_DIR + "/Trans-Fer/Tran-Fer-cocoa/local.xcconfig"
+  let local_xcconfig_FileFullPath = DISTRIBUTION_DIR + "/trans-fer-dev/Tran-Fer-cocoa/Trans-Fer/local.xcconfig"
   try dataChaîneVersion.write (to: URL (fileURLWithPath: local_xcconfig_FileFullPath), options: .atomic)
 //-------------------- Compiler le projet Xcode
   let debutCompilation = Date ()
@@ -174,7 +173,7 @@ do{
 //  runCommand ("/usr/bin/productbuild", ["--component-compression", "auto", "--component", "build/Debug/" + PRODUCT_NAME + ".app", "/Applications", packageFile])
 //  runCommand ("/bin/cp", [packageFile, DISTRIBUTION_DIR])
 //-------------------- Créer l'archive de Cocoa canari
-fm.changeCurrentDirectoryPath (DISTRIBUTION_DIR + "/" + TRANS_FER_DIR)
+fm.changeCurrentDirectoryPath (DISTRIBUTION_DIR + "/trans-fer-dev")
   let nomArchive = PRODUCT_NAME + "-" + VERSION_TRANS_FER
   runCommand ("/bin/mkdir", [nomArchive])
 //  runCommand ("/bin/cp", [packageFile, nomArchive])
@@ -231,16 +230,14 @@ fm.changeCurrentDirectoryPath (DISTRIBUTION_DIR + "/" + TRANS_FER_DIR)
 //--- Vérifier la signature
   let argumentsSignatureCode = [
     "-dv",
-//    "--digest-algorithm=sha1,sha256",
     "--verbose=4",
-//    DISTRIBUTION_DIR + "/" + TRANS_FER_DIR + "/build/" + BUILD_KIND.string + "/" + PRODUCT_NAME + ".app"
-    DISTRIBUTION_DIR + "/" + TRANS_FER_DIR + "/build/Debug/" + PRODUCT_NAME + ".app"
+    DISTRIBUTION_DIR + "/trans-fer-dev/" + nomArchive + "/" + PRODUCT_NAME + ".app"
   ]
   runCommand ("/usr/bin/codesign", argumentsSignatureCode)
 //--- Supprimer les répertoires intermédiaires
   fm.changeCurrentDirectoryPath (DISTRIBUTION_DIR)
-  while fm.fileExists (atPath: DISTRIBUTION_DIR + "/" + TRANS_FER_DIR) {
-    runCommand ("/bin/rm", ["-fr", DISTRIBUTION_DIR + "/" + TRANS_FER_DIR])
+  while fm.fileExists (atPath: DISTRIBUTION_DIR + "/trans-fer-dev") {
+    runCommand ("/bin/rm", ["-fr", DISTRIBUTION_DIR + "/trans-fer-dev"])
   }
   //---
   let durée = Int (DureeCompilation)
