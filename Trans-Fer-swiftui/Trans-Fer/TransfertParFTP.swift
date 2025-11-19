@@ -58,28 +58,6 @@ final class TransfertParFTP : NSObject {
     )
   //--- Display Alert
     inAlertState.wrappedValue = true
-//    let alert = NSAlert ()
-//    self.mAlert = alert
-//    alert.messageText = "???"
-//    alert.addButton (withTitle: "Arrêter")
-//    alert.beginSheetModal (for: inWindow) { (_ inResponse : NSApplication.ModalResponse) in
-//      NotificationCenter.default.removeObserver (
-//        self,
-//        name: NSNotification.Name.NSFileHandleDataAvailable,
-//        object: stdoutHandle
-//      )
-//      DispatchQueue.main.async {
-//        self.mAlert = nil
-//        if process.isRunning {
-//          process.terminate ()
-//          self.mResult = 1
-//          inCallBack (1)
-//        }else{
-//          self.mResult = process.terminationStatus
-//          inCallBack (status)
-//        }
-//      }
-//    }
   //--- Launch command
     process.launch ()
   }
